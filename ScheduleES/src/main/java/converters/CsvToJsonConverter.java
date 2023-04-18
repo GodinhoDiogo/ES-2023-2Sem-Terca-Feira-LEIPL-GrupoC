@@ -1,3 +1,4 @@
+package converters;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -16,7 +17,7 @@ import modules.Schedule;
 import modules.ScheduleList;
 
 public class CsvToJsonConverter {
-	public File CsvToJsonConverted(File file, String path) throws IOException {
+	public static void CsvToJsonConverted(File file, String path) throws IOException {
 		// Specify the path to your CSV file
         String filePath = "C:\\Users\\nanor\\Downloads\\horario_exemplo.csv";
 
@@ -72,6 +73,5 @@ public class CsvToJsonConverter {
         // Close the CSVParser and Reader
         csvParser.close();
         reader.close();
-        return file;
 	}
 }

@@ -1,0 +1,44 @@
+2023.04.18 18:27:49 INFO  Started: Metals version 0.11.11 in workspace 'C:\Users\coelh\Desktop\Uni\ES\ProjetoES\ScheduleES' for client Visual Studio Code 1.77.3.
+SLF4J: No SLF4J providers were found.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See https://www.slf4j.org/codes.html#noProviders for further details.
+SLF4J: Class path contains SLF4J bindings targeting slf4j-api versions 1.7.x or earlier.
+SLF4J: Ignoring binding found at [jar:file:/C:/Users/coelh/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/com/outr/scribe-slf4j_2.13/3.11.0/scribe-slf4j_2.13-3.11.0.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See https://www.slf4j.org/codes.html#ignoredBindings for an explanation.
+2023.04.18 18:27:50 INFO  time: initialize in 0.65s
+2023.04.18 18:27:51 WARN  Build server is not auto-connectable.
+2023.04.18 18:27:51 WARN  no build target for: C:\Users\coelh\Desktop\Uni\ES\ProjetoES\ScheduleES\src\main\java\modules\ScheduleList.java
+2023.04.18 18:27:51 WARN  no build target for: C:\Users\coelh\Desktop\Uni\ES\ProjetoES\ScheduleES\src\main\java\modules\Schedule.java
+2023.04.18 18:28:01 WARN  no build target for: C:\Users\coelh\Desktop\Uni\ES\ProjetoES\ScheduleES\src\main\java\ImportMenu.java
+2023.04.18 18:28:40 WARN  no build target for: C:\Users\coelh\Desktop\Uni\ES\ProjetoES\ScheduleES\src\main\java\ImportMenu.java
+abr 18, 2023 6:29:07 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 74
+2023.04.18 18:29:20 WARN  no build target for: C:\Users\coelh\Desktop\Uni\ES\ProjetoES\ScheduleES\src\main\java\ImportMenu.java
+2023.04.18 18:29:25 WARN  no build target for: C:\Users\coelh\Desktop\Uni\ES\ProjetoES\ScheduleES\src\main\java\ImportMenu.java
+2023.04.18 18:35:58 WARN  no build target for: C:\Users\coelh\Desktop\Uni\ES\ProjetoES\ScheduleES\src\main\java\JsonToCsvConverter.java
+2023.04.18 18:56:19 WARN  no build target for: C:\Users\coelh\Desktop\Uni\ES\ProjetoES\ScheduleES\src\main\java\JsonToCsvConverter.java
+abr 18, 2023 6:56:23 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+2023.04.18 18:57:57 WARN  no build target for: C:\Users\coelh\Desktop\Uni\ES\ProjetoES\ScheduleES\src\main\java\ImportMenu.java
+2023.04.18 19:03:56 WARN  no build target for: C:\Users\coelh\Desktop\Uni\ES\ProjetoES\ScheduleES\src\main\java\JsonToCsvConverter.java
+abr 18, 2023 7:03:59 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1022
+2023.04.18 19:04:21 WARN  no build target for: C:\Users\coelh\Desktop\Uni\ES\ProjetoES\ScheduleES\src\main\java\ImportMenu.java
+abr 18, 2023 7:05:26 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1191
+2023.04.18 19:08:57 WARN  Using indexes to guess the definition of JsonToCsvConverter
+abr 18, 2023 7:08:59 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1300
+2023.04.18 19:09:00 WARN  Using indexes to guess the definition of JsonToCsvConverter
+2023.04.18 19:09:03 WARN  no build target for: C:\Users\coelh\Desktop\Uni\ES\ProjetoES\ScheduleES\src\main\java\ImportMenu.java
+2023.04.18 19:10:12 WARN  no build target for: C:\Users\coelh\Desktop\Uni\ES\ProjetoES\ScheduleES\src\main\java\JsonToCsvConverter.java
+2023.04.18 19:12:07 WARN  no build target for: C:\Users\coelh\Desktop\Uni\ES\ProjetoES\ScheduleES\src\main\java\CsvToJsonConverter.java
+2023.04.18 19:12:12 WARN  no build target for: C:\Users\coelh\Desktop\Uni\ES\ProjetoES\ScheduleES\src\main\java\CsvToJsonConverter.java
+2023.04.18 19:14:37 WARN  no build target for: C:\Users\coelh\Desktop\Uni\ES\ProjetoES\ScheduleES\src\main\java\Main.java
+2023.04.18 19:15:12 WARN  no build target for: C:\Users\coelh\Desktop\Uni\ES\ProjetoES\ScheduleES\src\main\java\menus\ImportMenu.java
+2023.04.18 19:23:43 WARN  no build target for: C:\Users\coelh\Desktop\Uni\ES\ProjetoES\ScheduleES\src\main\java\menus\FileChooser.java
+2023.04.18 19:26:28 WARN  no build target for: C:\Users\coelh\Desktop\Uni\ES\ProjetoES\ScheduleES\src\main\java\menus\FileChooser.java
+2023.04.18 19:26:31 WARN  no build target for: C:\Users\coelh\Desktop\Uni\ES\ProjetoES\ScheduleES\src\main\java\menus\ImportMenu.java
+2023.04.18 19:26:34 INFO  Shutting down server
+2023.04.18 19:26:34 INFO  shutting down Metals
+2023.04.18 19:26:34 INFO  Exiting server

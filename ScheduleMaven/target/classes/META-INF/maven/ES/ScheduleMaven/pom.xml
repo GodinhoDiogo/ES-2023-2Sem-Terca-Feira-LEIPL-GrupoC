@@ -4,10 +4,21 @@
   <artifactId>ScheduleMaven</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <dependencies>
+<<<<<<< HEAD
 <dependency>
     <groupId>com.googlecode.json-simple</groupId>
     <artifactId>json-simple</artifactId>
     <version>1.1.1</version>
 </dependency>
 </dependencies>
+=======
+  <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+<dependency>
+    <groupId>com.google.code.gson</groupId>
+    <artifactId>gson</artifactId>
+    <version>2.10.1</version>
+</dependency>
+ 
+  </dependencies>
+>>>>>>> df44ff87e4a5d9f3aeee6dda81795f3ed75f43d3
 </project>

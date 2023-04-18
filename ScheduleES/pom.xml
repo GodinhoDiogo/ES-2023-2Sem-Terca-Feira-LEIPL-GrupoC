@@ -8,7 +8,23 @@
   <groupId>Es</groupId>
   <artifactId>ScheduleES</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  
+   <dependencies>
+<dependency>
+    <groupId>com.google.code.gson</groupId>
+    <artifactId>gson</artifactId>
+    <version>2.10.1</version>
+</dependency>
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi</artifactId>
+    <version>5.2.0</version>
+</dependency>
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-csv</artifactId>
+    <version>1.8</version>
+</dependency>
+  </dependencies>
   <build>
     <plugins>
       <plugin>

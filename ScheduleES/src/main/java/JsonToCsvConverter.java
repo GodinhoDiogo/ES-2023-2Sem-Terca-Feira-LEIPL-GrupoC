@@ -14,14 +14,12 @@ import modules.ScheduleList;
 
 public class JsonToCsvConverter {
 	public File JsonToCsvConverted(File file, String path) throws IOException {
-		 // Specify the path to your JSON file containing the list of schedules
-        String jsonFilePath = "C:\\Users\\nanor\\OneDrive\\Ambiente de Trabalho\\schedules.json";
 
         // Specify the path to your output CSV file
-        String csvFilePath = "C:\\Users\\nanor\\OneDrive\\Ambiente de Trabalho\\schedules.csv";
+        String csvFilePath = path;
 
         // Create a reader for the JSON file
-        Reader jsonReader = new FileReader(jsonFilePath);
+        Reader jsonReader = new FileReader(file);
 
         // Parse the JSON file into a list of Schedule objects
         Gson gson = new Gson();

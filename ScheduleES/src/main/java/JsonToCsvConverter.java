@@ -1,28 +1,24 @@
 
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
-import org.apache.commons.csv.CSVRecord;
 import com.google.gson.Gson;
 
-import sure.Schedule;
-import sure.ScheduleList;
+import modules.Schedule;
+import modules.ScheduleList;
 
 public class JsonToCsvConverter {
 
     public static void main(String[] args) throws IOException {
         // Specify the path to your JSON file containing the list of schedules
-        String jsonFilePath = "/Users/tomascarvalho/Desktop/schedules.json";
+        String jsonFilePath = "C:\\Users\\nanor\\OneDrive\\Ambiente de Trabalho\\schedules.json";
 
         // Specify the path to your output CSV file
-        String csvFilePath = "/Users/tomascarvalho/Desktop/schedules.csv";
+        String csvFilePath = "C:\\Users\\nanor\\OneDrive\\Ambiente de Trabalho\\schedules.csv";
 
         // Create a reader for the JSON file
         Reader jsonReader = new FileReader(jsonFilePath);
@@ -34,12 +30,12 @@ public class JsonToCsvConverter {
         // Create a writer for the CSV file
         Writer csvWriter = new FileWriter(csvFilePath);
 
-        // Create a CSVPrinter using Apache Commons CSV with ";" as the delimiter
-        CSVPrinter csvPrinter = new CSVPrinter(csvWriter, CSVFormat.DEFAULT.withDelimiter(','));
+        // Get the attribute names of the Schedule class
+        String[] headers = {"curso", "unidadeCurricular", "turno", "turma", "inscritosNoTurno", "horarioFimAula",
+                            "diaSemana", "horarioInicioAula", "dataAula", "salaAtribuida", "lotacaoSala"};
 
-        // Write the header row to the CSV file with attribute names
-        csvPrinter.printRecord("Curso", "Unidade Curricular", "Turno", "Turma", "Inscritos no Turno", "Hor�rio Fim Aula",
-                "Dia Semana", "Hor�rio In�cio Aula", "Data Aula", "Sala Atribu�da", "Lota��o Sala");
+        // Create a CSVPrinter using Apache Commons CSV with ";" as the delimiter and the attribute names as headers
+        CSVPrinter csvPrinter = new CSVPrinter(csvWriter, CSVFormat.DEFAULT.withHeader(headers).withDelimiter(';'));
 
         // Write the Schedule objects to the CSV file
         for (Schedule schedule : schedules.getSchedules()) {

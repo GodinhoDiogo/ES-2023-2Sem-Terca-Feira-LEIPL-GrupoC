@@ -3,6 +3,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -14,13 +16,12 @@ import modules.Schedule;
 import modules.ScheduleList;
 
 public class CsvToJsonConverter {
-
-    public static void main(String[] args) throws IOException {
-        // Specify the path to your CSV file
+	public File CsvToJsonConverted(File file, String path) throws IOException {
+		// Specify the path to your CSV file
         String filePath = "C:\\Users\\nanor\\Downloads\\horario_exemplo.csv";
 
         // Create a reader for the CSV file
-        Reader reader = new FileReader(filePath);
+        Reader reader = new FileReader(file);
 
         // Create a CSVParser using Apache Commons CSV with ";" as the delimiter
         CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withDelimiter(';'));
@@ -60,7 +61,7 @@ public class CsvToJsonConverter {
 
         // Write JSON to a file
         try {
-            FileWriter writer = new FileWriter("C:\\Users\\nanor\\OneDrive\\Ambiente de Trabalho\\schedules.json");
+            FileWriter writer = new FileWriter(path);
             writer.write(json);
             writer.close();
             System.out.println("JSON data written to schedules.json file.");
@@ -71,5 +72,6 @@ public class CsvToJsonConverter {
         // Close the CSVParser and Reader
         csvParser.close();
         reader.close();
-    }
+        return file;
+	}
 }

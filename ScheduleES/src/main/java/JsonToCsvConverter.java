@@ -1,4 +1,5 @@
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,9 +13,8 @@ import modules.Schedule;
 import modules.ScheduleList;
 
 public class JsonToCsvConverter {
-
-    public static void main(String[] args) throws IOException {
-        // Specify the path to your JSON file containing the list of schedules
+	public File JsonToCsvConverted(File file, String path) throws IOException {
+		 // Specify the path to your JSON file containing the list of schedules
         String jsonFilePath = "C:\\Users\\nanor\\OneDrive\\Ambiente de Trabalho\\schedules.json";
 
         // Specify the path to your output CSV file
@@ -48,5 +48,6 @@ public class JsonToCsvConverter {
         // Close the CSVPrinter and Writer
         csvPrinter.close();
         csvWriter.close();
-    }
+		return file;
+	}
 }

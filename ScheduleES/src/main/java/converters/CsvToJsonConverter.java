@@ -19,7 +19,7 @@ import modules.ScheduleList;
 public class CsvToJsonConverter {
 	public static void CsvToJsonConverted(File file, String path) throws IOException {
 		// Specify the path to your CSV file
-        String filePath = "C:\\Users\\nanor\\Downloads\\horario_exemplo.csv";
+        //String filePath = "C:\\Users\\nanor\\Downloads\\horario_exemplo.csv";
 
         // Create a reader for the CSV file
         Reader reader = new FileReader(file);
@@ -73,5 +73,9 @@ public class CsvToJsonConverter {
         // Close the CSVParser and Reader
         csvParser.close();
         reader.close();
+//        return file;
 	}
+//	public static void main(String[] args) throws IOException {
+//		CsvToJsonConverted("C:\\Users\\nanor\\Downloads\\horario_exemplo.csv","C:\\Users\\nanor\\OneDrive\\Ambiente de Trabalho");
+//	}
 }

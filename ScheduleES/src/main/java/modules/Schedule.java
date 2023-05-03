@@ -1,6 +1,8 @@
 package modules;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Date;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -32,6 +34,9 @@ public class Schedule {
 		this.dataAula = dataAula;
 		this.salaAtribuida = salaAtribuida;
 		this.lotacaoSala = lotacaoSala;
+	}
+	public Schedule() {
+		
 	}
 	public String getCurso() {
 		return curso;
@@ -65,8 +70,48 @@ public class Schedule {
 		return horarioInicioAula;
 	}
 
-	public String getDataAula() {
-		return dataAula;
+	public void setCurso(String curso) {
+		this.curso = curso;
+	}
+	public void setUnidadeCurricular(String unidadeCurricular) {
+		this.unidadeCurricular = unidadeCurricular;
+	}
+	public void setTurno(String turno) {
+		this.turno = turno;
+	}
+	public void setTurma(String turma) {
+		this.turma = turma;
+	}
+	public void setInscritosNoTurno(String inscritosNoTurno) {
+		this.inscritosNoTurno = inscritosNoTurno;
+	}
+	public void setDiaSemana(String diaSemana) {
+		this.diaSemana = diaSemana;
+	}
+	public void setHorarioInicioAula(String horarioInicioAula) {
+		this.horarioInicioAula = horarioInicioAula;
+	}
+	public void setHorarioFimAula(String horarioFimAula) {
+		this.horarioFimAula = horarioFimAula;
+	}
+	public void setDataAula(String dataAula) {
+		this.dataAula = dataAula;
+	}
+	public void setSalaAtribuida(String salaAtribuida) {
+		this.salaAtribuida = salaAtribuida;
+	}
+	public void setLotacaoSala(String lotacaoSala) {
+		this.lotacaoSala = lotacaoSala;
+	}
+	public Date getDataAula() {
+		 SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+	        try {
+	            Date time = sdf.parse(dataAula);
+	            return time;
+	        } catch (ParseException e) {
+	            e.printStackTrace();
+	        }
+		return null;
 	}
 
 	public String getSalaAtribuida() {

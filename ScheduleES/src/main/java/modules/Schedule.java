@@ -32,55 +32,168 @@ public class Schedule {
 		this.salaAtribuida = salaAtribuida;
 		this.lotacaoSala = lotacaoSala;
 	}
+	public Schedule() {
+	}
+	
+	
+
 	public String getCurso() {
 		return curso;
 	}
+
+
+
+	public void setCurso(String curso) {
+		this.curso = curso;
+	}
+
+
 
 	public String getUnidadeCurricular() {
 		return unidadeCurricular;
 	}
 
+
+
+	public void setUnidadeCurricular(String unidadeCurricular) {
+		this.unidadeCurricular = unidadeCurricular;
+	}
+
+
+
 	public String getTurno() {
 		return turno;
 	}
+
+
+
+	public void setTurno(String turno) {
+		this.turno = turno;
+	}
+
+
 
 	public String getTurma() {
 		return turma;
 	}
 
+
+
+	public void setTurma(String turma) {
+		this.turma = turma;
+	}
+
+
+
 	public String getInscritosNoTurno() {
 		return inscritosNoTurno;
 	}
 
-	public String getHorarioFimAula() {
-		return horarioFimAula;
+
+
+	public void setInscritosNoTurno(String inscritosNoTurno) {
+		this.inscritosNoTurno = inscritosNoTurno;
 	}
+
+
 
 	public String getDiaSemana() {
 		return diaSemana;
 	}
 
+
+
+	public void setDiaSemana(String diaSemana) {
+		this.diaSemana = diaSemana;
+	}
+
+
+
 	public String getHorarioInicioAula() {
 		return horarioInicioAula;
 	}
+
+
+
+	public void setHorarioInicioAula(String horarioInicioAula) {
+		this.horarioInicioAula = horarioInicioAula;
+	}
+
+
+
+	public String getHorarioFimAula() {
+		return horarioFimAula;
+	}
+
+
+
+	public void setHorarioFimAula(String horarioFimAula) {
+		this.horarioFimAula = horarioFimAula;
+	}
+
+
 
 	public String getDataAula() {
 		return dataAula;
 	}
 
+
+
+	public void setDataAula(String dataAula) {
+		this.dataAula = dataAula;
+	}
+
+
+
 	public String getSalaAtribuida() {
 		return salaAtribuida;
 	}
 
+
+
+	public void setSalaAtribuida(String salaAtribuida) {
+		this.salaAtribuida = salaAtribuida;
+	}
+
+
+
 	public String getLotacaoSala() {
 		return lotacaoSala;
 	}
+
+
+
+	public void setLotacaoSala(String lotacaoSala) {
+		this.lotacaoSala = lotacaoSala;
+	}
+
+
 
 	// Method to convert object to JSON
 	public String toJson() {
 		Gson gson = new Gson();
 		return gson.toJson(this);
 	}
+	public boolean isEmpty() {
+		return curso == null && unidadeCurricular == null && turno == null && turma == null && inscritosNoTurno == null && diaSemana == null && horarioInicioAula == null && horarioFimAula == null && dataAula == null && salaAtribuida == null && lotacaoSala == null;
+	}
+	@Override
+	public String toString() {
+	    return "Schedule{" +
+	            "curso='" + curso + '\'' +
+	            ", unidadeCurricular='" + unidadeCurricular + '\'' +
+	            ", turno='" + turno + '\'' +
+	            ", turma='" + turma + '\'' +
+	            ", inscritosNoTurno='" + inscritosNoTurno + '\'' +
+	            ", diaSemana='" + diaSemana + '\'' +
+	            ", horarioInicioAula='" + horarioInicioAula + '\'' +
+	            ", horarioFimAula='" + horarioFimAula + '\'' +
+	            ", dataAula='" + dataAula + '\'' +
+	            ", salaAtribuida='" + salaAtribuida + '\'' +
+	            ", lotacaoSala='" + lotacaoSala + '\'' +
+	            '}';
+	}
+
 
 }
 

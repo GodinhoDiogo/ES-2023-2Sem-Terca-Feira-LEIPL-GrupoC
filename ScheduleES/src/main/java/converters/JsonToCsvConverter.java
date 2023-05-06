@@ -24,27 +24,7 @@ public class JsonToCsvConverter {
         ScheduleList schedules = gson.fromJson(jsonReader, ScheduleList.class);
 
         // Create a writer for the CSV file
-        Writer csvWriter = new FileWriter(path);
-
-        // Get the attribute names of the Schedule class
-        String[] headers = {"curso", "unidadeCurricular", "turno", "turma", "inscritosNoTurno", "horarioFimAula",
-                            "diaSemana", "horarioInicioAula", "dataAula", "salaAtribuida", "lotacaoSala"};
-
-        // Create a CSVPrinter using Apache Commons CSV with ";" as the delimiter and the attribute names as headers
-        CSVPrinter csvPrinter = new CSVPrinter(csvWriter, CSVFormat.DEFAULT.withHeader(headers).withDelimiter(','));
-
-        // Write the Schedule objects to the CSV file
-        for (Schedule schedule : schedules.getSchedules()) {
-            if (lista == null || lista.contains(schedule.getUnidadeCurricular())) {
-                csvPrinter.printRecord(schedule.getCurso(), schedule.getUnidadeCurricular(), schedule.getTurno(),
-                        schedule.getTurma(), schedule.getInscritosNoTurno(), schedule.getDiaSemana(),
-                        schedule.getHorarioInicioAula(), schedule.getHorarioFimAula(), schedule.getDataAula(),
-                        schedule.getSalaAtribuida(), schedule.getLotacaoSala());
-            }
-        }
-        // Close the CSVPrinter and Writer
-        csvPrinter.close();
-        csvWriter.close();
+        
 
         return schedules;
     }

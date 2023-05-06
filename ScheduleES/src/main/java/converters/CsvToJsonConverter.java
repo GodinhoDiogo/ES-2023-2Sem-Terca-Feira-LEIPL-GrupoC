@@ -18,29 +18,9 @@ import modules.Schedule;
 import modules.ScheduleList;
 
 public class CsvToJsonConverter {
-	public static ScheduleList CsvToJsonConverted(File file, String path, List<String> lista) throws IOException { //usar a função de baixo aqui
-		
+	public static ScheduleList CsvToJsonConverted(File file, List<String> lista) throws IOException {
 
-		ScheduleList schedules =  scheduleList(file, lista);
-
-		// Iterate through the CSV records
-		
-		// Convert ScheduleList object to JSON
-		Gson gson = new Gson();
-		String json = gson.toJson(schedules);
-
-		// Write JSON to a file
-		try {
-			FileWriter writer = new FileWriter(path);
-			writer.write(json);
-			writer.close();
-			System.out.println("JSON data written to schedules.json file.");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		
-		
+		ScheduleList schedules = scheduleList(file, lista);
 
 		return schedules;
 	}
@@ -68,6 +48,7 @@ public class CsvToJsonConverter {
 			String turno = record.get(2);
 			String turma = record.get(3);
 			String inscritosNoTurno = record.get(4);
+			
 			String diaSemana = record.get(5);
 			String horarioInicioAula = record.get(6);
 			String horarioFimAula = record.get(7);
@@ -77,17 +58,17 @@ public class CsvToJsonConverter {
 
 			// Create a Schedule object and add it to the ScheduleList
 			if (lista == null || lista.contains(unidadeCurricular)) {
-	            // Create a Schedule object and add it to the ScheduleList
-	            Schedule schedule = new Schedule(curso, unidadeCurricular, turno, turma, inscritosNoTurno, diaSemana,
-	                    horarioInicioAula, horarioFimAula, dataAula, salaAtribuida, lotacaoSala);
-	            schedules.add(schedule);
-	        }
+				// Create a Schedule object and add it to the ScheduleList
+				Schedule schedule = new Schedule(curso, unidadeCurricular, turno, turma, inscritosNoTurno, diaSemana,
+						horarioInicioAula, horarioFimAula, dataAula, salaAtribuida, lotacaoSala);
+				schedules.add(schedule);
+			}
 
 		}
 		// Close the CSVParser and Reader
 		csvParser.close();
 		reader.close();
-		
+
 		return schedules;
 	}
 

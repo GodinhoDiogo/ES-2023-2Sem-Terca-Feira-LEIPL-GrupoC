@@ -21,13 +21,13 @@ import java.util.List;
 public class SelectUCs extends JFrame { // adicionar uma opcao para selecionar todas
 	private List<JCheckBox> optionCheckBoxes;
 	private JButton submitButton;
-	private ScheduleList lista;
 	private ScheduleList list;
 
-	public SelectUCs(final File file, List<String> options, final String path, final int typeFile) throws IOException {
+	public SelectUCs(ScheduleList sl, List<String> options) throws IOException {
 		
 		super("Menu Swing");
 		// Cria o painel de opções
+		list = sl;
 		JPanel optionsPanel = new JPanel(new GridLayout(options.size() + 1, 1));
 		optionCheckBoxes = new ArrayList<>();
 		final JCheckBox selectAllCheckBox = new JCheckBox("Selecionar Todos");
@@ -64,24 +64,11 @@ public class SelectUCs extends JFrame { // adicionar uma opcao para selecionar t
 					}
 				}
 				
-				if (typeFile == 1) {
-					try {
-						list = JsonToCsvConverter.jsonToCsvConverted(file, path, selectedOptions2);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-
-				} else {
-					try {
-						list = CsvToJsonConverter.CsvToJsonConverted(file, path, selectedOptions2);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-
-				}
+				
 				JOptionPane.showMessageDialog(SelectUCs.this, selectedOptions);
 				dispose();
-				MonthSchedule.initializeSchdule(list.getSchedules());
+				
+				new SaveOrDisplay(list);
 				
 				
 			}

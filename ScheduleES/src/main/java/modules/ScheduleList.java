@@ -53,7 +53,6 @@ public static ScheduleList fromWebcalString(String webcalData) {
 	        String dayOfTheWeek = LocalDate.parse(date).getDayOfWeek().toString();
 	        String begin = new SimpleDateFormat("HH:mm").format(event.getDateStart().getValue());
 	        String end = new SimpleDateFormat("HH:mm").format(event.getDateEnd().getValue());
-	        System.out.println(date);
 	        String location = event.getLocation().getValue();
 	        String uc = event.getSummary().getValue().split("-")[0];
 //Done: begin, end, location, inscritos no turno, uc

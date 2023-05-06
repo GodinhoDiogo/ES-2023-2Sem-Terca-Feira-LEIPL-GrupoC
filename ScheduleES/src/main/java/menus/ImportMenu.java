@@ -3,6 +3,7 @@ package menus;
 import converters.*;
 import modules.Schedule;
 import modules.ScheduleList;
+import utils.SaveFile;
 
 import org.apache.commons.io.FileUtils;
 
@@ -112,18 +113,19 @@ public class ImportMenu extends JFrame {
 		String path = FileChooser.saveFile();
 		ScheduleList lista; // troco isto e meto aqui o código?
 		if (typeFile == 1) {
-			lista = JsonToCsvConverter.scheduleList(file, null); 
-			
+			lista = JsonToCsvConverter.jsonToCsvConverted(file,path, null); 
+			SaveFile.saveFileCsv(lista, path);
 			dispose();
 
 		} else {
 			lista = CsvToJsonConverter.scheduleList(file, null);
+			SaveFile.saveFileJson(lista, path);
 			
 			
 			dispose();
 		}
 		List<String> lista2 = removeDuplicateWords(lista); // retorna lista das cadeiras
-		new SelectUCs(file, lista2, path, typeFile);
+		//new SelectUCs(file, lista2, path, typeFile);
 
 	}
 

@@ -13,12 +13,20 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.awt.Color;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import modules.Horario;
 import modules.Schedule;
@@ -38,7 +46,8 @@ public class MonthSchedule extends JPanel {
 	private JButton dayButton;
 	private int currentAulaIndex = 0;
 	private JButton monthButton;
-
+	JButton button = new JButton("Overlapping Classes");
+	final List<List<String>> overlappingClasses = new ArrayList<>();
 	public MonthSchedule(final List<Schedule> scheduleList, final List<List<Date>> novemberWeekDaysList) {
 		this.scheduleList = scheduleList;
 		this.currentWeekDays = novemberWeekDaysList.get(0);
@@ -141,55 +150,204 @@ public class MonthSchedule extends JPanel {
 		}
 
 	}
-
+	
 	private void populateSchedule(List<Schedule> schedules, List<Date> currentWeekDays) {
-		aulas.clear();
-		contentPanel.removeAll();
-		String[] result = convert(currentWeekDays); // o result sao os dias da semana
-		// Adiciona os dias da semana na primeira linha do painel
-		contentPanel.add(new JLabel(""));
-		contentPanel.add(new JLabel(result[0]));
-		contentPanel.add(new JLabel(result[1]));
-		contentPanel.add(new JLabel(result[2]));
-		contentPanel.add(new JLabel(result[3]));
-		contentPanel.add(new JLabel(result[4]));
-		contentPanel.add(new JLabel(result[5]));
-		contentPanel.add(new JLabel(result[6]));
+	    aulas.clear();
+	    contentPanel.removeAll();
+	    String[] result = convert(currentWeekDays); // o result sao os dias da semana
+	    // Add the days of the week to the first row of the panel
+	    contentPanel.add(new JLabel(""));
+	    for (String day : result) {
+	        contentPanel.add(new JLabel(day));
+	    }
 
-		String[] horarios = { "13:00:00", "14:30:00", "16:00:00", "17:30:00", "18:00:00" };
-		String[] dates = convert2(result);
+	    String[] horarios = { "08:00:00","09:30:00","11:00:00","13:00:00", "14:30:00", "16:00:00", "17:30:00", "18:00:00" };
+	    final String[] dates = convert2(result);
 
-		for (String horario : horarios) {
-			JLabel label = new JLabel(horario);
-			label.setHorizontalAlignment(JLabel.CENTER);
-			label.setVerticalAlignment(JLabel.CENTER);
-			contentPanel.add(label);
-			for (int j = 0; j < 7; j++) {
-				JLabel cellLabel = new JLabel();
-				for (Schedule schedule : schedules) {
-					System.out.println(schedule.getHorarioInicioAula() + " " + schedule.getDiaSemana() + " " + schedule.getDataAula());
-					if (schedule.getHorarioInicioAula().equals(horario)
-							&& schedule.getDiaSemana().equals(getDiaSemana(j))
-							&& schedule.getDataAula().equals(dates[j])) {
+	    for (final String horario : horarios) {
+	        JLabel label = new JLabel(horario);
+	        label.setHorizontalAlignment(JLabel.CENTER);
+	        label.setVerticalAlignment(JLabel.CENTER);
+	        contentPanel.add(label);
+	        for (int j = 0; j < 7; j++) {
+	        	final int i=j;
+	            JLabel cellLabel = new JLabel();
+	            cellLabel.setBorder(BorderFactory.createLineBorder(new Color(0,0,0))); // add border
+	            for (Schedule schedule : schedules) {
+	                if (schedule.getHorarioInicioAula().equals(horario)
+	                        && schedule.getDiaSemana().equals(getDiaSemana(j))
+	                        && schedule.getDataAula().equals(dates[j])) {
 
-						cellLabel.setText(schedule.getUnidadeCurricular());
-						List<String> lista = new ArrayList<String>();
-						lista.add(schedule.getDiaSemana());
-						lista.add(schedule.getHorarioInicioAula());
-						lista.add(schedule.getDataAula());
-						lista.add(schedule.getUnidadeCurricular());
-						aulas.add(lista);
-						System.out.println("Nao me estas a entrar √© aqui pois nao?");
-					}
-				}
-				cellLabel.setHorizontalAlignment(JLabel.CENTER);
-				cellLabel.setVerticalAlignment(JLabel.CENTER);
-				contentPanel.add(cellLabel);
-			}
-		}
-		contentPanel.revalidate(); // Atualiza a interface do usu√°rio
-		contentPanel.repaint();
+	                    cellLabel.setText(schedule.getUnidadeCurricular());
+	                    List<String> lista = new ArrayList<String>();
+	                    lista.add(schedule.getDiaSemana());
+	                    lista.add(schedule.getHorarioInicioAula());
+	                    lista.add(schedule.getDataAula());
+	                    lista.add(schedule.getUnidadeCurricular());
+	                    lista.add(schedule.getInscritosNoTurno());
+	                    lista.add(schedule.getLotacaoSala());
+	                    aulas.add(lista);
+	                }
+	            }
+	            int count = 0;
+	            for (List<String> aula : aulas) {
+	                if (aula.get(1).equals(horario) && aula.get(0).equals(getDiaSemana(j)) && aula.get(2).equals(dates[j])) {
+	                    count++;
+	                }
+	            }
+	            for(List<String> aula :aulas) {
+	            	if(aula.get(4).equals("") || aula.get(5).equals("")) {
+	            	}else {
+	            		if(Integer.parseInt(aula.get(4)) > Integer.parseInt(aula.get(5))) {
+	            			System.out.println(aula.get(4) + " ola" + aula.get(5));
+		            		 cellLabel.setBorder(BorderFactory.createLineBorder(new Color(255,0,0)));
+		            	}
+	            	}
+	            	
+	            }
+	            if (count >= 2) {
+	                JButton seeClashesButton = new JButton("Aula sobreposta");
+	                seeClashesButton.addActionListener(new ActionListener() {
+	                    @Override
+	                    public void actionPerformed(ActionEvent e) {
+	                        JFrame clashPopup = new JFrame("Clashed Classes");
+	                        clashPopup.setSize(300, 200);
+	                        clashPopup.setLocationRelativeTo(null);
+	                        JTextArea clashTextArea = new JTextArea();
+	                        for (List<String> aula : aulas) {
+	                            if (aula.get(1).equals(horario) && aula.get(0).equals(getDiaSemana(i)) && aula.get(2).equals(dates[i])) {
+	                                clashTextArea.append(aula.get(3) + "\n");
+	                            }
+	                        }
+	                        clashPopup.add(new JScrollPane(clashTextArea));
+	                        clashPopup.setVisible(true);
+	                    }
+	                });
+	                cellLabel.setLayout(new BorderLayout());
+	                cellLabel.add(seeClashesButton, BorderLayout.NORTH);
+	            }
+	            cellLabel.setHorizontalAlignment(JLabel.CENTER);
+	            cellLabel.setVerticalAlignment(JLabel.CENTER);
+	            contentPanel.add(cellLabel);
+	        }
+	    }
+	    contentPanel.revalidate(); // Update the user interface
+	    contentPanel.repaint();
 	}
+
+//	private void populateSchedule(List<Schedule> schedules, List<Date> currentWeekDays) {
+//	    aulas.clear();
+//	    contentPanel.removeAll();
+//	    String[] result = convert(currentWeekDays); // o result sao os dias da semana
+//	    // Adiciona os dias da semana na primeira linha do painel
+//	    contentPanel.add(new JLabel(""));
+//	    contentPanel.add(new JLabel(result[0]));
+//	    contentPanel.add(new JLabel(result[1]));
+//	    contentPanel.add(new JLabel(result[2]));
+//	    contentPanel.add(new JLabel(result[3]));
+//	    contentPanel.add(new JLabel(result[4]));
+//	    contentPanel.add(new JLabel(result[5]));
+//	    contentPanel.add(new JLabel(result[6]));
+//
+//	    String[] horarios = { "08:00:00","09:30:00","11:00:00","13:00:00", "14:30:00", "16:00:00", "17:30:00", "18:00:00" };
+//	    String[] dates = convert2(result);
+//
+//	    for (String horario : horarios) {
+//	        JLabel label = new JLabel(horario);
+//	        label.setHorizontalAlignment(JLabel.CENTER);
+//	        label.setVerticalAlignment(JLabel.CENTER);
+//	        contentPanel.add(label);
+//	        for (int j = 0; j < 7; j++) {
+//	            JLabel cellLabel = new JLabel();
+//	            cellLabel.setBorder(BorderFactory.createLineBorder(new Color(0,0,0))); // add border
+//	            JTextField clashTextField = new JTextField("");
+//	            for (Schedule schedule : schedules) {
+//	                System.out.println(schedule.getHorarioInicioAula() + " " + schedule.getDiaSemana() + " " + schedule.getDataAula());
+//	                if (schedule.getHorarioInicioAula().equals(horario)
+//	                        && schedule.getDiaSemana().equals(getDiaSemana(j))
+//	                        && schedule.getDataAula().equals(dates[j])) {
+//
+//	                    cellLabel.setText(schedule.getUnidadeCurricular());
+//	                    List<String> lista = new ArrayList<String>();
+//	                    lista.add(schedule.getDiaSemana());
+//	                    lista.add(schedule.getHorarioInicioAula());
+//	                    lista.add(schedule.getDataAula());
+//	                    lista.add(schedule.getUnidadeCurricular());
+//	                    aulas.add(lista);
+//	                    System.out.println("Nao me estas a entrar È aqui pois nao?");
+//	                }
+//	            }
+//	            int count = 0;
+//	            for (List<String> aula : aulas) {
+//	                if (aula.get(1).equals(horario) && aula.get(0).equals(getDiaSemana(j)) && aula.get(2).equals(dates[j])) {
+//	                    count++;
+//	                }
+//	            }
+//	            if (count >= 2) {
+//	                clashTextField.setText("Clash!");
+//	            }
+//	            clashTextField.setEditable(false);
+//	            cellLabel.setLayout(new BorderLayout());
+//	            cellLabel.add(clashTextField, BorderLayout.NORTH);
+//	            cellLabel.setHorizontalAlignment(JLabel.CENTER);
+//	            cellLabel.setVerticalAlignment(JLabel.CENTER);
+//	            contentPanel.add(cellLabel);
+//	        }
+//	    }
+//	    contentPanel.revalidate(); // Atualiza a interface do usu·rio
+//	    contentPanel.repaint();
+//	}
+
+//	private void populateSchedule(List<Schedule> schedules, List<Date> currentWeekDays) {
+//	    aulas.clear();
+//	    contentPanel.removeAll();
+//	    String[] result = convert(currentWeekDays); // o result sao os dias da semana
+//	    // Adiciona os dias da semana na primeira linha do painel
+//	    contentPanel.add(new JLabel(""));
+//	    contentPanel.add(new JLabel(result[0]));
+//	    contentPanel.add(new JLabel(result[1]));
+//	    contentPanel.add(new JLabel(result[2]));
+//	    contentPanel.add(new JLabel(result[3]));
+//	    contentPanel.add(new JLabel(result[4]));
+//	    contentPanel.add(new JLabel(result[5]));
+//	    contentPanel.add(new JLabel(result[6]));
+//
+//	    String[] horarios = { "08:00:00","09:30:00","11:00:00","13:00:00", "14:30:00", "16:00:00", "17:30:00", "18:00:00" };
+//	    String[] dates = convert2(result);
+//
+//	    for (String horario : horarios) {
+//	        JLabel label = new JLabel(horario);
+//	        label.setHorizontalAlignment(JLabel.CENTER);
+//	        label.setVerticalAlignment(JLabel.CENTER);
+//	        contentPanel.add(label);
+//	        for (int j = 0; j < 7; j++) {
+//	            JLabel cellLabel = new JLabel();
+//	            cellLabel.setBorder(BorderFactory.createLineBorder(new Color(0,0,0))); // add border
+//	            for (Schedule schedule : schedules) {
+//	                System.out.println(schedule.getHorarioInicioAula() + " " + schedule.getDiaSemana() + " " + schedule.getDataAula());
+//	                if (schedule.getHorarioInicioAula().equals(horario)
+//	                        && schedule.getDiaSemana().equals(getDiaSemana(j))
+//	                        && schedule.getDataAula().equals(dates[j])) {
+//
+//	                    cellLabel.setText(schedule.getUnidadeCurricular());
+//	                    List<String> lista = new ArrayList<String>();
+//	                    lista.add(schedule.getDiaSemana());
+//	                    lista.add(schedule.getHorarioInicioAula());
+//	                    lista.add(schedule.getDataAula());
+//	                    lista.add(schedule.getUnidadeCurricular());
+//	                    aulas.add(lista);
+//	                    System.out.println("Nao me estas a entrar È aqui pois nao?");
+//	                }
+//	            }
+//	            cellLabel.setHorizontalAlignment(JLabel.CENTER);
+//	            cellLabel.setVerticalAlignment(JLabel.CENTER);
+//	            contentPanel.add(cellLabel);
+//	        }
+//	    }
+//	    contentPanel.revalidate(); // Atualiza a interface do usu·rio
+//	    contentPanel.repaint();
+//	}
+
 
 	public String[] convert2(String[] weekDays) {
 		String[] dates = new String[weekDays.length];
@@ -447,7 +605,32 @@ public class MonthSchedule extends JPanel {
 		JButton prevButton = new JButton("Previous Month");
 		JButton weekTableButton = new JButton("Week Table");
 		JButton nextButton2 = new JButton("Next Month");
+		button.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        JDialog dialog = new JDialog();
+		        dialog.setTitle("Overlapping Classes");
+		        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
+		        JPanel panel = new JPanel();
+		        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+		        for (List<String> overlappingClass : overlappingClasses) {
+		            JLabel label = new JLabel("Dia: " + overlappingClass.get(2) + " Hor·rio: "+ overlappingClass.get(2) + " UC: "+ overlappingClass.get(3));
+//		            currentClass.add(schedule.getDiaSemana());
+//		            currentClass.add(schedule.getHorarioInicioAula());
+//		            currentClass.add(schedule.getDataAula());
+//		            currentClass.add(schedule.getUnidadeCurricular());
+		            panel.add(label);
+		        }
+
+		        dialog.getContentPane().add(panel);
+		        dialog.pack();
+		        dialog.setLocationRelativeTo(null);
+		        dialog.setVisible(true);
+		    }
+		});
+		
 		// Add event listeners to buttons
 		prevButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -507,6 +690,7 @@ public class MonthSchedule extends JPanel {
 		footerPanel.add(prevButton);
 		footerPanel.add(weekTableButton);
 		footerPanel.add(nextButton2);
+		footerPanel.add(button);
 
 		// Repaint view
 		revalidate();
@@ -516,7 +700,7 @@ public class MonthSchedule extends JPanel {
 	public static void initializeSchdule(List<Schedule> list) {
 		Horario h = new Horario();
 		try {
-			h.carregarAulasDeArquivoCSV("/Users/tomasrosa/Desktop/horario_exemplo_2.csv");
+			h.carregarAulasDeArquivoCSV("C:\\Users\\nanor\\OneDrive\\Ambiente de Trabalho\\schedules.csv");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -535,7 +719,7 @@ public class MonthSchedule extends JPanel {
 
 	public static void main(String[] args) throws IOException {
 		Horario h = new Horario();
-		h.carregarAulasDeArquivoCSV("/Users/tomasrosa/Desktop/horario_exemplo_2.csv");
+		h.carregarAulasDeArquivoCSV("C:\\Users\\nanor\\OneDrive\\Ambiente de Trabalho\\schedules.csv");
 		List<List<Date>> d = getMonthWeekDays(2022, 11);
 		MonthSchedule schedulePanel = new MonthSchedule(h.getAulas(), d);
 
@@ -548,11 +732,11 @@ public class MonthSchedule extends JPanel {
 		frame.setVisible(true);
 
 	}
-
-	private void populateSchedule2(List<Schedule> schedules, List<Date> currentWeekDays) {
+//
+	private void populateSchedule2(List<Schedule> schedules, List<Date> currentMonthDays) {
 		aulas.clear();
 //		contentPanel.removeAll();
-		String[] result = convert(currentWeekDays); // o result sao os dias da semana
+		String[] result = convert(currentMonthDays); // o result sao os dias da semana
 		// Adiciona os dias da semana na primeira linha do painel
 		contentPanel.add(new JLabel(""));
 		contentPanel.add(new JLabel(result[0]));
@@ -563,7 +747,7 @@ public class MonthSchedule extends JPanel {
 		contentPanel.add(new JLabel(result[5]));
 		contentPanel.add(new JLabel(result[6]));
 
-		String[] horarios = { "13:00:00", "14:30:00", "16:00:00", "17:30:00", "18:00:00" };
+		String[] horarios = { "08:00:00","09:30:00","11:00:00","13:00:00", "14:30:00", "16:00:00", "17:30:00", "18:00:00" };
 		String[] dates = convert2(result);
 
 		for (String horario : horarios) {
@@ -572,29 +756,231 @@ public class MonthSchedule extends JPanel {
 			label.setVerticalAlignment(JLabel.CENTER);
 			contentPanel.add(label);
 			for (int j = 0; j < 7; j++) {
-				JLabel cellLabel = new JLabel();
-				for (Schedule schedule : schedules) {
+			    JLabel cellLabel = new JLabel();
+			    cellLabel.setBorder(BorderFactory.createLineBorder(new Color(0,0,0))); // add border
 
-					if (schedule.getHorarioInicioAula().equals(horario)
-							&& schedule.getDiaSemana().equals(getDiaSemana(j))
-							&& schedule.getDataAula().equals(dates[j])) {
+			     // new line
 
-						cellLabel.setText(schedule.getUnidadeCurricular());
-						List<String> lista = new ArrayList<String>();
-						lista.add(schedule.getDiaSemana());
-						lista.add(schedule.getHorarioInicioAula());
-						lista.add(schedule.getDataAula());
-						lista.add(schedule.getUnidadeCurricular());
-						aulas.add(lista);
-					}
-				}
-				cellLabel.setHorizontalAlignment(JLabel.CENTER);
-				cellLabel.setVerticalAlignment(JLabel.CENTER);
-				contentPanel.add(cellLabel);
+			    for (Schedule schedule : schedules) {
+			        if (schedule.getHorarioInicioAula().equals(horario)
+			            && schedule.getDiaSemana().equals(getDiaSemana(j))
+			            && schedule.getDataAula().equals(dates[j])) {
+
+			            List<String> currentClass = new ArrayList<>(); // new line
+			            currentClass.add(schedule.getDiaSemana());
+			            currentClass.add(schedule.getHorarioInicioAula());
+			            currentClass.add(schedule.getDataAula());
+			            currentClass.add(schedule.getUnidadeCurricular());
+
+			            boolean isOverlapping = false;
+			            for (List<String> overlappingClass : overlappingClasses) {
+			                if (overlappingClass.get(0).equals(currentClass.get(0))
+			                    && overlappingClass.get(1).equals(currentClass.get(1))
+			                    && overlappingClass.get(2).equals(currentClass.get(2))) {
+			                    overlappingClass.add(currentClass.get(3));
+			                    isOverlapping = true;
+			                    break;
+			                }
+			            }
+
+			            if (!isOverlapping) {
+			                cellLabel.setText(currentClass.get(3));
+			                overlappingClasses.add(currentClass);
+			            }else {
+			            	System.out.println(schedule.getCurso() + " " + schedule.getDataAula() + " "+ schedule.getDiaSemana());
+			            
+			            	JButton button = new JButton("Overlapping Classes");
+			            	button.addActionListener(new ActionListener() {
+			            	    @Override
+			            	    public void actionPerformed(ActionEvent e) {
+			            	        JDialog dialog = new JDialog();
+			            	        dialog.setTitle("Overlapping Classes");
+			            	        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+			            	        JPanel panel = new JPanel();
+			            	        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+			            	        for (List<String> overlappingClass : overlappingClasses) {
+			            	            JLabel label = new JLabel(overlappingClass.get(3));
+			            	            panel.add(label);
+			            	        }
+
+			            	        dialog.getContentPane().add(panel);
+			            	        dialog.pack();
+			            	        dialog.setLocationRelativeTo(null);
+			            	        dialog.setVisible(true);
+			            	    }
+			            	});
+			            	cellLabel.add(button);
+
+			            
+			        }
+			        }
+			    }
+
+			    if (overlappingClasses.size() > 1) { // new line
+			        StringBuilder tooltipText = new StringBuilder(); // new line
+			        tooltipText.append("<html>"); // new line
+			        for (List<String> overlappingClass : overlappingClasses) { // new line
+			            tooltipText.append(overlappingClass.get(3)).append("<br>"); // new line
+			        }
+			        tooltipText.append("</html>"); // new line
+			        cellLabel.setToolTipText(tooltipText.toString()); // new line
+			    } // new line
+
+			    cellLabel.setHorizontalAlignment(JLabel.CENTER);
+			    cellLabel.setVerticalAlignment(JLabel.CENTER);
+			    contentPanel.add(cellLabel);
 			}
+
 		}
 		contentPanel.revalidate(); // Atualiza a interface do usu√°rio
 		contentPanel.repaint();
 	}
+	
+	
+
+//	private void populateSchedule2(List<Schedule> schedules, List<Date> currentMonthDays, JPanel parentPanel) {
+//	    aulas.clear();
+//	    contentPanel.removeAll();
+//	    String[] result = convert(currentMonthDays); // o result sao os dias da semana
+//	    // Adiciona os dias da semana na primeira linha do painel
+//	    contentPanel.add(new JLabel(""));
+//	    contentPanel.add(new JLabel(result[0]));
+//	    contentPanel.add(new JLabel(result[1]));
+//	    contentPanel.add(new JLabel(result[2]));
+//	    contentPanel.add(new JLabel(result[3]));
+//	    contentPanel.add(new JLabel(result[4]));
+//	    contentPanel.add(new JLabel(result[5]));
+//	    contentPanel.add(new JLabel(result[6]));
+//
+//	    String[] horarios = { "08:00:00", "09:30:00", "11:00:00", "13:00:00", "14:30:00", "16:00:00", "17:30:00", "18:00:00" };
+//	    String[] dates = convert2(result);
+//
+//	    for (String horario : horarios) {
+//	        JLabel label = new JLabel(horario);
+//	        label.setHorizontalAlignment(JLabel.CENTER);
+//	        label.setVerticalAlignment(JLabel.CENTER);
+//	        contentPanel.add(label);
+//	        for (int j = 0; j < 7; j++) {
+//	            JLabel cellLabel = new JLabel();
+//	            cellLabel.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0))); // add border
+//
+//	            for (Schedule schedule : schedules) {
+//	                if (schedule.getHorarioInicioAula().equals(horario)
+//	                        && schedule.getDiaSemana().equals(getDiaSemana(j))
+//	                        && schedule.getDataAula().equals(dates[j])) {
+//
+//	                    cellLabel.setText(schedule.getUnidadeCurricular());
+//	                    List<String> lista = new ArrayList<String>();
+//	                    lista.add(schedule.getDiaSemana());
+//	                    lista.add(schedule.getHorarioInicioAula());
+//	                    lista.add(schedule.getDataAula());
+//	                    lista.add(schedule.getUnidadeCurricular());
+//	                    aulas.add(lista);
+//	                }
+//	            }
+//	            cellLabel.setHorizontalAlignment(JLabel.CENTER);
+//	            cellLabel.setVerticalAlignment(JLabel.CENTER);
+//	            contentPanel.add(cellLabel);
+//	        }
+//	    }
+//	    contentPanel.revalidate(); // Atualiza a interface do usu·rio
+//	    contentPanel.repaint();
+//
+//	    // Create the button panel and add the "See clashes" button
+//	    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+//	    JButton seeClashesButton = new JButton("See clashes");
+//	    seeClashesButton.addActionListener(new ActionListener() {
+//	        @Override
+//	        public void actionPerformed(ActionEvent e) {
+//	            findAndDisplayClashes(aulas);
+//	        }
+//	    });
+//	    buttonPanel.add(seeClashesButton);
+//
+//	    // Add the button panel to the bottom of the parent container
+//	    parentPanel.add(buttonPanel, BorderLayout.SOUTH);
+//	}
+
+
+
+
+
+
+//	private void populateSchedule2(List<Schedule> schedules, List<Date> currentWeekDays) {
+//	    aulas.clear();
+//	    contentPanel.removeAll();
+//	    String[] result = convert(currentWeekDays);
+//	    contentPanel.add(new JLabel(""));
+//	    for (String day : result) {
+//	        contentPanel.add(new JLabel(day));
+//	    }
+//
+//	    String[] horarios = { "08:00:00","09:30:00","11:00:00","13:00:00", "14:30:00", "16:00:00", "17:30:00", "18:00:00" };
+//	    String[] dates = convert2(result);
+//
+//	    for (String horario : horarios) {
+//	        JLabel label = new JLabel(horario);
+//	        label.setHorizontalAlignment(JLabel.CENTER);
+//	        label.setVerticalAlignment(JLabel.CENTER);
+//	        contentPanel.add(label);
+//	        for (int j = 0; j < 7; j++) {
+//	            JLabel cellLabel = new JLabel();
+//	            cellLabel.setBorder(BorderFactory.createLineBorder(new Color(0,0,0))); // add border
+//	            for (Schedule schedule : schedules) {
+//	                if (schedule.getHorarioInicioAula().equals(horario)
+//	                        && schedule.getDiaSemana().equals(getDiaSemana(j))
+//	                        && schedule.getDataAula().equals(dates[j])) {
+//
+//	                    cellLabel.setText(schedule.getUnidadeCurricular());
+//	                    List<String> lista = new ArrayList<String>();
+//	                    lista.add(schedule.getDiaSemana());
+//	                    lista.add(schedule.getHorarioInicioAula());
+//	                    lista.add(schedule.getDataAula());
+//	                    lista.add(schedule.getUnidadeCurricular());
+//	                    aulas.add(lista);
+//	                }
+//	            }
+//	            cellLabel.setHorizontalAlignment(JLabel.CENTER);
+//	            cellLabel.setVerticalAlignment(JLabel.CENTER);
+//	            contentPanel.add(cellLabel);
+//	        }
+//	    }
+//
+//	    JButton seeClashesButton = new JButton("See clashes");
+//	    seeClashesButton.addActionListener(new ActionListener() {
+//	        @Override
+//	        public void actionPerformed(ActionEvent e) {
+//	            JFrame clashPopup = new JFrame("Clashed Classes");
+//	            clashPopup.setSize(300, 200);
+//	            clashPopup.setLocationRelativeTo(null);
+//	            JTextArea clashTextArea = new JTextArea();
+//
+//	            boolean clashesFound = false;
+//	            for (int i = 0; i < aulas.size() - 1; i++) {
+//	                List<String> aula1 = aulas.get(i);
+//	                for (int j = i + 1; j < aulas.size(); j++) {
+//	                    List<String> aula2 = aulas.get(j);
+//	                    if (aula1.get(0).equals(aula2.get(0)) && aula1.get(1).equals(aula2.get(1)) && aula1.get(2).equals(aula2.get(2))) {
+//	                        clashesFound = true;
+//	                        clashTextArea.append(aula1.get(3) + " and " + aula2.get(3) + " on " + aula1.get(2) + "\n");
+//	                    }
+//	                }
+//	            }
+//
+//	            if (!clashesFound) {
+//	                clashTextArea.append("No clashes found.");
+//	            }
+//
+//	            clashPopup.add(new JScrollPane(clashTextArea));
+//	            clashPopup.setVisible(true);
+//	        }
+//	    });
+//
+//	    contentPanel.add(seeClashesButton);
+//	    contentPanel.revalidate();
+//	    contentPanel.repaint();
+//	}
 
 }

@@ -1,11 +1,26 @@
 package modules;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.google.gson.Gson;
+
+import biweekly.Biweekly;
+import biweekly.ICalendar;
+import biweekly.component.VEvent;
+import biweekly.property.DateEnd;
+import biweekly.property.DateStart;
+import biweekly.property.Location;
+import biweekly.property.Summary;
 
 public class Schedule {
 	private String curso;
@@ -127,6 +142,25 @@ public class Schedule {
 		Gson gson = new Gson();
 		return gson.toJson(this);
 	}
+	
+	
+	@Override
+	public String toString() {
+	    return "Schedule{" +
+	            "curso='" + curso + '\'' +
+	            ", unidadeCurricular='" + unidadeCurricular + '\'' +
+	            ", turno='" + turno + '\'' +
+	            ", turma='" + turma + '\'' +
+	            ", inscritosNoTurno='" + inscritosNoTurno + '\'' +
+	            ", diaSemana='" + diaSemana + '\'' +
+	            ", horarioInicioAula='" + horarioInicioAula + '\'' +
+	            ", horarioFimAula='" + horarioFimAula + '\'' +
+	            ", dataAula='" + dataAula + '\'' +
+	            ", salaAtribuida='" + salaAtribuida + '\'' +
+	            ", lotacaoSala='" + lotacaoSala + '\'' +
+	            '}';
+	}
+
 
 }
 

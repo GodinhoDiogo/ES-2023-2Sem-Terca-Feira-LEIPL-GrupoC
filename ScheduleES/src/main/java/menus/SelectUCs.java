@@ -19,13 +19,13 @@ public class SelectUCs extends JFrame { // adicionar uma opcao para selecionar t
 	private JButton submitButton;
 	private ScheduleList lista;
 
-	public SelectUCs(File file, List<String> options, String path, int typeFile) throws IOException {
+	public SelectUCs(final File file, List<String> options, final String path, final int typeFile) throws IOException {
 		super("Menu Swing");
 
 		// Cria o painel de opções
 		JPanel optionsPanel = new JPanel(new GridLayout(options.size() + 1, 1));
 		optionCheckBoxes = new ArrayList<>();
-		JCheckBox selectAllCheckBox = new JCheckBox("Selecionar Todos");
+		final JCheckBox selectAllCheckBox = new JCheckBox("Selecionar Todos");
 		selectAllCheckBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

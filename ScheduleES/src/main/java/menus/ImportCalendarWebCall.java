@@ -16,14 +16,18 @@ import biweekly.ICalendar;
 import biweekly.component.VEvent;
 import biweekly.io.TimezoneInfo;
 import biweekly.io.scribe.property.ICalPropertyScribe;
+import biweekly.property.DateStart;
 import biweekly.property.ICalProperty;
+import biweekly.property.Summary;
 import biweekly.util.ICalDate;
 import modules.Schedule;
+import modules.ScheduleList;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLStreamHandler;
 import java.net.URLStreamHandlerFactory;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.awt.*;
@@ -53,7 +57,6 @@ public class ImportCalendarWebCall extends JFrame {
         // Create button
         JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 String text = textField.getText();
                 try {
@@ -62,6 +65,7 @@ public class ImportCalendarWebCall extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+                dispose();
             }
         });
         
@@ -75,69 +79,59 @@ public class ImportCalendarWebCall extends JFrame {
         setVisible(true);
     }
     public void lerHorario(String uri) throws IOException {
-    	System.out.println("Vou ler o url");
-    	URL url = new URL(uri.replace("webcal", "https"));
+        System.out.println("Vou ler o url");
+        URL url = new URL(uri.replace("webcal", "https"));
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String inputLine;
         StringBuilder content = new StringBuilder();
         while ((inputLine = in.readLine()) != null) {
-            content.append(in.readLine());
+            content.append(inputLine).append("\n");
         }
         in.close();
         con.disconnect();
-        List<Schedule> schedules = createScheduleList(content.toString());
-    }
-    public List<Schedule> createScheduleList(String input) {
-        List<Schedule> scheduleList = new ArrayList<>();
-        //String[] events = input.split("END:VEVENT");
-        String[] events = input.split("\\\\n");
-        for (String event : events) {
-            String[] lines = event.split("\\n");
-            Schedule schedule = new Schedule();
-            
-            System.out.println(event);
-//            for(String l : lines) {
-//            	System.out.println(l);
-//            }
-//            for (String line : lines) {
-//                String[] keyValue = line.split(":", 2);
-//                for(String s : keyValue) {
-//                	System.out.println("key value: " + s);
-//                }
-//                String key = keyValue[0];
-//                String value = keyValue.length > 1 ? keyValue[1] : "";
-//
-//                switch (key) {
-////                    case "SUMMARY":
-////                        schedule.setSummary(value);
-////                        break;
-////                    case "DESCRIPTION":
-////                        schedule.setDescription(value);
-////                        break;
-////                    case "LOCATION":
-////                        schedule.setLocation(value);
-////                        break;
-//                    case "DTSTART":
-//                        
-//                        schedule.setHorarioFimAula(value);
-//                        break;
-//                    case "DTEND":
-//                        
-//                        schedule.setHorarioInicioAula(value);
-//                        break;
-//                }
-//            }
-//            if (!schedule.isEmpty()) {
-//                scheduleList.add(schedule);
-//                System.out.println("got a valid schedule");
-//                System.out.println(schedule);
-//            }
-        }
 
-        return scheduleList;
+      //  System.out.println(content.toString());
+        ScheduleList ss = ScheduleList.fromWebcalString(content.toString());
+//        for(Schedule s : ss) {
+//            System.out.println(s);
+//        }
     }
+
+//        try {
+//        	System.out.println(content.toString());
+//			List<Schedule> schedules = parse(content.toString());
+//			for(Schedule s : schedules) {
+//				System.out.println(s);
+//			}
+//		} catch (Exception e) {
+//			
+//		}
+        
+//    public List<Schedule> parse(String webcalData) throws Exception {
+//        List<Schedule> schedules = new ArrayList<>();
+//        ICalendar ical = Biweekly.parse(webcalData).first();
+//        System.out.println(ical == null);
+//        for (VEvent event : ical.getEvents()) {
+//          DateStart start = event.getDateStart();
+//          Summary summary = event.getSummary();
+//          System.out.println("an event");
+//          String summaryValue = summary.getValue();
+//          String[] summaryParts = summaryValue.split(" - ");
+//
+//          String unidadeCurricular = summaryParts[0];
+//          String docente = summaryParts[1];
+//          String date = new SimpleDateFormat("yyyy-MM-dd").format(start.getValue());
+//          String startTime = new SimpleDateFormat("HH:mm").format(start.getValue());
+//          String endTime = new SimpleDateFormat("HH:mm").format(event.getDateEnd().getValue());
+//          String location = event.getLocation().getValue();
+//
+//          Schedule schedule = new Schedule(null, unidadeCurricular, null, null, null, null, startTime, endTime, date, location, null);
+//          schedules.add(schedule);
+//        }
+//        return schedules;
+//      }
         
 
 

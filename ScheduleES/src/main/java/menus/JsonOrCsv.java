@@ -29,7 +29,6 @@ public class JsonOrCsv extends JFrame{
         // Create submit button
         submitButton = new JButton("Submit");
         submitButton.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedOption = radioButton1.isSelected() ? 1 : 2;
                 new ImportMenu(selectedOption);

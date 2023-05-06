@@ -7,12 +7,12 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
-public class ModeChooser extends JFrame{
+public class JsonOrCsv extends JFrame{
 	private JRadioButton radioButton1;
     private JRadioButton radioButton2;
     private JButton submitButton;
     
-    public ModeChooser(){
+    public JsonOrCsv(){
         super("Radio Button Window");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(3, 1));
@@ -48,6 +48,6 @@ public class ModeChooser extends JFrame{
     }
     
     public static void main(String[] args) {
-        new ModeChooser();
+        new JsonOrCsv();
     }
 }

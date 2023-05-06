@@ -6,6 +6,7 @@ import WebSchedule.MonthSchedule;
 import converters.CsvToJsonConverter;
 import converters.JsonToCsvConverter;
 import modules.Horario;
+import modules.Schedule;
 import modules.ScheduleList;
 
 import java.awt.*;
@@ -62,6 +63,7 @@ public class SelectUCs extends JFrame { // adicionar uma opcao para selecionar t
 						selectedOptions2.add(checkBox.getText());
 					}
 				}
+				
 				if (typeFile == 1) {
 					try {
 						list = JsonToCsvConverter.jsonToCsvConverted(file, path, selectedOptions2);
@@ -78,7 +80,9 @@ public class SelectUCs extends JFrame { // adicionar uma opcao para selecionar t
 
 				}
 				JOptionPane.showMessageDialog(SelectUCs.this, selectedOptions);
-				initializeSchedule();
+				dispose();
+				MonthSchedule.initializeSchdule(list.getSchedules());
+				
 				
 			}
 		});
@@ -98,17 +102,5 @@ public class SelectUCs extends JFrame { // adicionar uma opcao para selecionar t
 		// lista = CsvToJsonConverter.CsvToJsonConverted(file, path);
 	}
 	
-	public void initializeSchedule() {
-		
-		dispose();
-		List<List<Date>> d = MonthSchedule.getMonthWeekDays(2022, 11);
-		MonthSchedule schedulePanel = new MonthSchedule(list.getSchedules(), d);
-		JFrame frame = new JFrame("Horário das Aulas");
-		frame.getContentPane().add(schedulePanel);
-
-		// Configura o tamanho do JFrame e o torna visível
-		frame.setSize(800, 600);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-	}
+	
 }

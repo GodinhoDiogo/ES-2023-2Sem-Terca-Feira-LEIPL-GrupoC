@@ -167,7 +167,7 @@ public class MonthSchedule extends JPanel {
 			for (int j = 0; j < 7; j++) {
 				JLabel cellLabel = new JLabel();
 				for (Schedule schedule : schedules) {
-
+					System.out.println(schedule.getHorarioInicioAula() + " " + schedule.getDiaSemana() + " " + schedule.getDataAula());
 					if (schedule.getHorarioInicioAula().equals(horario)
 							&& schedule.getDiaSemana().equals(getDiaSemana(j))
 							&& schedule.getDataAula().equals(dates[j])) {
@@ -179,6 +179,7 @@ public class MonthSchedule extends JPanel {
 						lista.add(schedule.getDataAula());
 						lista.add(schedule.getUnidadeCurricular());
 						aulas.add(lista);
+						System.out.println("Nao me estas a entrar é aqui pois nao?");
 					}
 				}
 				cellLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -510,6 +511,26 @@ public class MonthSchedule extends JPanel {
 		// Repaint view
 		revalidate();
 		repaint();
+	}
+	
+	public static void initializeSchdule(List<Schedule> list) {
+		Horario h = new Horario();
+		try {
+			h.carregarAulasDeArquivoCSV("/Users/tomasrosa/Desktop/horario_exemplo_2.csv");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		List<List<Date>> d = getMonthWeekDays(2022, 11);
+		MonthSchedule schedulePanel = new MonthSchedule(list, d);
+
+		JFrame frame = new JFrame("Horário das Aulas");
+		frame.getContentPane().add(schedulePanel);
+
+		// Configura o tamanho do JFrame e o torna visível
+		frame.setSize(800, 600);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 	}
 
 	public static void main(String[] args) throws IOException {

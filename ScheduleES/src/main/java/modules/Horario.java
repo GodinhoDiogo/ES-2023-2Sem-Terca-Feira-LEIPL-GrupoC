@@ -22,26 +22,6 @@ public class Horario {
     public void removerAula(Schedule aula) {
         this.aulas.remove(aula);
     }
-
-    public List<Schedule> pesquisarAulasPorDia(String diaSemana) {
-        List<Schedule> aulasDoDia = new ArrayList<Schedule>();
-        for (Schedule aula : this.aulas) {
-            if (aula.getDiaSemana().equals(diaSemana)) {
-                aulasDoDia.add(aula);
-            }
-        }
-        return aulasDoDia;
-    }
-
-    public List<Schedule> pesquisarAulasPorSemana(Date inicioSemana, Date fimSemana) {
-        List<Schedule> aulasDaSemana = new ArrayList<Schedule>();
-        for (Schedule aula : this.aulas) {
-            if (aula.getDataAula().compareTo(inicioSemana) >= 0 && aula.getDataAula().compareTo(fimSemana) <= 0) {
-                aulasDaSemana.add(aula);
-            }
-        }
-        return aulasDaSemana;
-    }
 /*
     public List<Schedule> pesquisarAulasPorMes(int mes) {
         List<Schedule> aulasDoMes = new ArrayList<Schedule>();

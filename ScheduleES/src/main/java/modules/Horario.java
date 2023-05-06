@@ -22,27 +22,7 @@ public class Horario {
     public void removerAula(Schedule aula) {
         this.aulas.remove(aula);
     }
-
-    public List<Schedule> pesquisarAulasPorDia(String diaSemana) {
-        List<Schedule> aulasDoDia = new ArrayList<Schedule>();
-        for (Schedule aula : this.aulas) {
-            if (aula.getDiaSemana().equals(diaSemana)) {
-                aulasDoDia.add(aula);
-            }
-        }
-        return aulasDoDia;
-    }
-
-    public List<Schedule> pesquisarAulasPorSemana(Date inicioSemana, Date fimSemana) {
-        List<Schedule> aulasDaSemana = new ArrayList<Schedule>();
-        for (Schedule aula : this.aulas) {
-            if (aula.getDataAula().compareTo(inicioSemana) >= 0 && aula.getDataAula().compareTo(fimSemana) <= 0) {
-                aulasDaSemana.add(aula);
-            }
-        }
-        return aulasDaSemana;
-    }
-
+/*
     public List<Schedule> pesquisarAulasPorMes(int mes) {
         List<Schedule> aulasDoMes = new ArrayList<Schedule>();
         for (Schedule aula : this.aulas) {
@@ -52,11 +32,17 @@ public class Horario {
         }
         return aulasDoMes;
     }
+    */
     public List<Schedule> carregarAulasDeArquivoCSV(String arquivo) throws IOException {
         FileReader reader = new FileReader(arquivo);
         CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withDelimiter(';'));
         List<CSVRecord> linhas = csvParser.getRecords();
+        boolean firstRow = true;
         for (CSVRecord linha : linhas) {
+        	if (firstRow) {
+				firstRow = false;
+				continue; // Skip the first row
+			}
             Schedule aula = new Schedule();
             aula.setCurso(linha.get(0));
             aula.setUnidadeCurricular(linha.get(1));
@@ -74,6 +60,7 @@ public class Horario {
         reader.close();
         return aulas;
     }
+    
     public List<Schedule> getAulas(){
     	return aulas;
     }

@@ -37,8 +37,8 @@ public class JsonToCsvConverter {
         for (Schedule schedule : schedules.getSchedules()) {
             if (lista == null || lista.contains(schedule.getUnidadeCurricular())) {
                 csvPrinter.printRecord(schedule.getCurso(), schedule.getUnidadeCurricular(), schedule.getTurno(),
-                        schedule.getTurma(), schedule.getInscritosNoTurno(), schedule.getHorarioFimAula(),
-                        schedule.getDiaSemana(), schedule.getHorarioInicioAula(), schedule.getDataAula(),
+                        schedule.getTurma(), schedule.getInscritosNoTurno(), schedule.getDiaSemana(),
+                        schedule.getHorarioInicioAula(), schedule.getHorarioFimAula(), schedule.getDataAula(),
                         schedule.getSalaAtribuida(), schedule.getLotacaoSala());
             }
         }

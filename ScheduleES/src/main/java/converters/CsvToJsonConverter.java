@@ -50,7 +50,7 @@ public class CsvToJsonConverter {
 		Reader reader = new FileReader(file);
 
 		// Create a CSVParser using Apache Commons CSV with ";" as the delimiter
-		CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withDelimiter(','));
+		CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withDelimiter(';'));
 
 		// Create a ScheduleList object to hold Schedule objects
 		ScheduleList schedules = new ScheduleList();
@@ -68,9 +68,9 @@ public class CsvToJsonConverter {
 			String turno = record.get(2);
 			String turma = record.get(3);
 			String inscritosNoTurno = record.get(4);
-			String horarioFimAula = record.get(5);
-			String diaSemana = record.get(6);
-			String horarioInicioAula = record.get(7);
+			String diaSemana = record.get(5);
+			String horarioInicioAula = record.get(6);
+			String horarioFimAula = record.get(7);
 			String dataAula = record.get(8);
 			String salaAtribuida = record.get(9);
 			String lotacaoSala = record.get(10);

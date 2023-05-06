@@ -110,11 +110,7 @@ public class ImportMenu extends JFrame {
 	public void handleFile(File file) throws IOException {
 
 		String path = FileChooser.saveFile();
-		// new SelectUCs(file,lista2,path);
-
 		ScheduleList lista; // troco isto e meto aqui o código?
-		
-
 		if (typeFile == 1) {
 			lista = JsonToCsvConverter.scheduleList(file, null); 
 			

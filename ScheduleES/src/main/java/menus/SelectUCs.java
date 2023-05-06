@@ -2,8 +2,11 @@ package menus;
 
 import javax.swing.*;
 
+import WebSchedule.MonthSchedule;
 import converters.CsvToJsonConverter;
 import converters.JsonToCsvConverter;
+import modules.Horario;
+import modules.Schedule;
 import modules.ScheduleList;
 
 import java.awt.*;
@@ -11,6 +14,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -18,16 +22,16 @@ public class SelectUCs extends JFrame { // adicionar uma opcao para selecionar t
 	private List<JCheckBox> optionCheckBoxes;
 	private JButton submitButton;
 	private ScheduleList lista;
+	private ScheduleList list;
 
 	public SelectUCs(final File file, List<String> options, final String path, final int typeFile) throws IOException {
+		
 		super("Menu Swing");
-
 		// Cria o painel de opções
 		JPanel optionsPanel = new JPanel(new GridLayout(options.size() + 1, 1));
 		optionCheckBoxes = new ArrayList<>();
 		final JCheckBox selectAllCheckBox = new JCheckBox("Selecionar Todos");
 		selectAllCheckBox.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				boolean selectAll = selectAllCheckBox.isSelected();
 				for (JCheckBox checkBox : optionCheckBoxes) {
@@ -45,7 +49,6 @@ public class SelectUCs extends JFrame { // adicionar uma opcao para selecionar t
 		// Cria o botão de submissão
 		submitButton = new JButton("Submit");
 		submitButton.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				// Ação a ser executada ao clicar no botão de submissão
 				String selectedOptions = "Opções selecionadas:\n";
@@ -60,22 +63,27 @@ public class SelectUCs extends JFrame { // adicionar uma opcao para selecionar t
 						selectedOptions2.add(checkBox.getText());
 					}
 				}
+				
 				if (typeFile == 1) {
 					try {
-						ScheduleList lista3 = JsonToCsvConverter.jsonToCsvConverted(file, path, selectedOptions2);
+						list = JsonToCsvConverter.jsonToCsvConverted(file, path, selectedOptions2);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
 
 				} else {
 					try {
-						ScheduleList lista2 = CsvToJsonConverter.CsvToJsonConverted(file, path, selectedOptions2);
+						list = CsvToJsonConverter.CsvToJsonConverted(file, path, selectedOptions2);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
 
 				}
 				JOptionPane.showMessageDialog(SelectUCs.this, selectedOptions);
+				dispose();
+				MonthSchedule.initializeSchdule(list.getSchedules());
+				
+				
 			}
 		});
 
@@ -93,5 +101,6 @@ public class SelectUCs extends JFrame { // adicionar uma opcao para selecionar t
 
 		// lista = CsvToJsonConverter.CsvToJsonConverted(file, path);
 	}
-
+	
+	
 }

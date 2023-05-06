@@ -118,6 +118,8 @@ public class Schedule {
 	public void setLotacaoSala(String lotacaoSala) {
 		this.lotacaoSala = lotacaoSala;
 	}
+	
+	/*
 	public Date getDataAula() {
 		 SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 	        try {
@@ -128,7 +130,10 @@ public class Schedule {
 	        }
 		return null;
 	}
-
+*/
+	public String getDataAula() {
+		return dataAula;
+	}
 	public String getSalaAtribuida() {
 		return salaAtribuida;
 	}

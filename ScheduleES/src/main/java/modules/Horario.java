@@ -42,7 +42,7 @@ public class Horario {
         }
         return aulasDaSemana;
     }
-
+/*
     public List<Schedule> pesquisarAulasPorMes(int mes) {
         List<Schedule> aulasDoMes = new ArrayList<Schedule>();
         for (Schedule aula : this.aulas) {
@@ -52,11 +52,17 @@ public class Horario {
         }
         return aulasDoMes;
     }
+    */
     public List<Schedule> carregarAulasDeArquivoCSV(String arquivo) throws IOException {
         FileReader reader = new FileReader(arquivo);
         CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withDelimiter(';'));
         List<CSVRecord> linhas = csvParser.getRecords();
+        boolean firstRow = true;
         for (CSVRecord linha : linhas) {
+        	if (firstRow) {
+				firstRow = false;
+				continue; // Skip the first row
+			}
             Schedule aula = new Schedule();
             aula.setCurso(linha.get(0));
             aula.setUnidadeCurricular(linha.get(1));
@@ -74,6 +80,7 @@ public class Horario {
         reader.close();
         return aulas;
     }
+    
     public List<Schedule> getAulas(){
     	return aulas;
     }

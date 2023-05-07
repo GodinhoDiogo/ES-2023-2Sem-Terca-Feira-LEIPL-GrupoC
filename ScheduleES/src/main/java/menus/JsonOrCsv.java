@@ -11,7 +11,6 @@ public class JsonOrCsv extends JFrame{
 	private JRadioButton radioButton1;
     private JRadioButton radioButton2;
     private JButton submitButton;
-    
     public JsonOrCsv(){
         super("Radio Button Window");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

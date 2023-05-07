@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import modules.Horario;
+
 import modules.Schedule;
 
 public class MonthSchedule extends JPanel {
@@ -534,22 +534,7 @@ public class MonthSchedule extends JPanel {
 		frame.setVisible(true);
 	}
 
-	public static void main(String[] args) throws IOException {
-		Horario h = new Horario();
-		h.carregarAulasDeArquivoCSV("/Users/tomasrosa/Desktop/horario_exemplo_2.csv");
-		List<List<Date>> d = getMonthWeekDays(2022, 11);
-		MonthSchedule schedulePanel = new MonthSchedule(h.getAulas(), d);
-
-		JFrame frame = new JFrame("Horário das Aulas");
-		frame.getContentPane().add(schedulePanel);
-
-		// Configura o tamanho do JFrame e o torna visível
-		frame.setSize(800, 600);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-
-	}
-
+	
 	private void populateSchedule2(List<Schedule> schedules, List<Date> currentWeekDays) {
 		aulas.clear();
 //		contentPanel.removeAll();

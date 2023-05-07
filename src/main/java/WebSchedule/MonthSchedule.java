@@ -268,7 +268,7 @@ public class MonthSchedule extends JPanel {
 			// Se não for, adiciona os dias restantes da última semana separadamente
 			int daysFromMonday = 7 - (lastDayOfWeek - 2); // 2 porque estamos considerando que segunda é o segundo dia
 															// da semana (e não o primeiro)
-			List<Date> lastWeekDays = new ArrayList<>();
+			List<Date> lastWeekDays = new ArrayList<Date>();
 			cal.add(Calendar.DAY_OF_MONTH, -daysFromMonday);
 			for (int i = 0; i < daysFromMonday; i++) {
 				lastWeekDays.add(cal.getTime());

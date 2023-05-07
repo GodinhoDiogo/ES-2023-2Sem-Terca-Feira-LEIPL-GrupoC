@@ -29,10 +29,10 @@ class SaveOrDisplay extends JFrame {
 			}
 		});
 		JButton saveButton = new JButton("save");
-		displayButton.addActionListener(new ActionListener() {
+		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				dispose();
+				new ChooseExport(list);
 			}
 		});
 

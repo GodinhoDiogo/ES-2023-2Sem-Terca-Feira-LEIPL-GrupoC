@@ -400,11 +400,11 @@ public class MonthSchedule extends JPanel {
 	public static List<List<String>> ordenar(List<List<String>> aulas) {
 
 		// Cria duas listas vazias para armazenar as aulas de seg e ter
-		List<List<String>> aulasSeg = new ArrayList<>();
-		List<List<String>> aulasTer = new ArrayList<>();
-		List<List<String>> aulasQua = new ArrayList<>();
-		List<List<String>> aulasQui = new ArrayList<>();
-		List<List<String>> aulasSex = new ArrayList<>();
+		List<List<String>> aulasSeg = new ArrayList<List<String>>();
+		List<List<String>> aulasTer = new ArrayList<List<String>>();
+		List<List<String>> aulasQua = new ArrayList<List<String>>();
+		List<List<String>> aulasQui = new ArrayList<List<String>>();
+		List<List<String>> aulasSex = new ArrayList<List<String>>();
 
 		// Percorre a lista de aulas e adiciona as aulas de seg e ter às suas
 		// respectivas listas
@@ -426,7 +426,7 @@ public class MonthSchedule extends JPanel {
 
 		// Cria uma nova lista que vai conter todas as aulas de seg seguidas por todas
 		// as aulas de ter
-		List<List<String>> aulasSegTer = new ArrayList<>();
+		List<List<String>> aulasSegTer = new ArrayList<List<String>>();
 		aulasSegTer.addAll(aulasSeg);
 		aulasSegTer.addAll(aulasTer);
 		aulasSegTer.addAll(aulasQua);

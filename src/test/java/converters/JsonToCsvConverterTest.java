@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,33 +25,10 @@ public class JsonToCsvConverterTest {
     private String csvFilePath;
 
     @BeforeEach
-    public void setUp() throws IOException {
-        InputStream csvResource = getClass().getClassLoader().getResourceAsStream("sample.csv");
-        if (csvResource != null) {
-            File tempCsvFile = File.createTempFile("tempCsvFile", ".csv");
-            tempCsvFile.deleteOnExit();
-            try (OutputStream outputStream = new FileOutputStream(tempCsvFile)) {
-                byte[] buffer = new byte[1024];
-                int length;
-                while ((length = csvResource.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, length);
-                }
-            }
-            csvFilePath = tempCsvFile.getPath();
-        }
-        
-        InputStream jsonResource = getClass().getClassLoader().getResourceAsStream("sample.json");
-        if (jsonResource != null) {
-            jsonFile = File.createTempFile("tempJsonFile", ".json");
-            jsonFile.deleteOnExit();
-            try (OutputStream outputStream = new FileOutputStream(jsonFile)) {
-                byte[] buffer = new byte[1024];
-                int length;
-                while ((length = jsonResource.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, length);
-                }
-            }
-        }
+    public void setUp() {
+        Path resourcesPath = Paths.get("src", "test", "resources");
+        csvFilePath = resourcesPath.resolve("sample.csv").toString();
+        jsonFile = resourcesPath.resolve("sample.json").toFile();
     }
 
 

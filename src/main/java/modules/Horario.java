@@ -2,7 +2,6 @@ package modules;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -58,6 +57,7 @@ public class Horario {
             this.adicionarAula(aula);
         }
         reader.close();
+        csvParser.close();
         return aulas;
     }
     

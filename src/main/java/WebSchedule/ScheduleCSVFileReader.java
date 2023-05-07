@@ -3,8 +3,6 @@ package WebSchedule;
 
 
 import modules.Schedule;
-
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,6 +34,7 @@ public class ScheduleCSVFileReader {
 	            aula.setLotacaoSala(linha.get(10));
 	        }
 	        reader.close();
+	        csvParser.close();
 	        return aulas;
 	    }
 

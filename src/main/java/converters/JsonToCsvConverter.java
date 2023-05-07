@@ -2,16 +2,10 @@ package converters;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
-import java.io.Writer;
 import java.util.List;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
 import com.google.gson.Gson;
-
-import modules.Schedule;
 import modules.ScheduleList;
 
 public class JsonToCsvConverter {

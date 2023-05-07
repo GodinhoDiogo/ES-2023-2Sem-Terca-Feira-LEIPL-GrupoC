@@ -1,21 +1,12 @@
 package menus;
 
 import javax.swing.*;
-
-import WebSchedule.MonthSchedule;
-import converters.CsvToJsonConverter;
-import converters.JsonToCsvConverter;
-import modules.Horario;
-import modules.Schedule;
 import modules.ScheduleList;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
 public class SelectUCs extends JFrame { // adicionar uma opcao para selecionar todas

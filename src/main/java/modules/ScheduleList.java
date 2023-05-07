@@ -87,14 +87,5 @@ public static ScheduleList fromWebcalString(String webcalData) {
 		return names.toString();
 	}
 
-	private static String extractValue(String eventData, String regex) {
-	    Pattern pattern = Pattern.compile(regex);
-	    Matcher matcher = pattern.matcher(eventData);
-
-	    if (matcher.find()) {
-	        return matcher.group(1).trim();
-	    }
-
-	    return "";
-	}
+	
 }

@@ -8,8 +8,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-
 import modules.ScheduleList;
 import utils.SaveFile;
 

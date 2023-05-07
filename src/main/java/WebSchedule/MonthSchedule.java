@@ -35,7 +35,7 @@ public class MonthSchedule extends JPanel {
 	private int currentWeekIndex;
 	private List<Date> currentWeekDays;
 	private int month;
-	private List<List<String>> aulas = new ArrayList<>();
+	private List<List<String>> aulas = new ArrayList<List<String>>();
 	private JButton dayButton;
 	private int currentAulaIndex = 0;
 	private JButton monthButton;

@@ -1,6 +1,7 @@
 package WebSchedule;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -14,11 +15,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 
 import modules.Horario;
 import modules.Schedule;
@@ -107,17 +111,18 @@ public class MonthSchedule extends JPanel {
 		dayButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (aulas.get(currentAulaIndex) == null) {
 
-				aulasFrame();
+				} else {
+					aulasFrame();
+				}
 			}
 		});
 
 		monthButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				monthFrame();
-
 			}
 
 		});
@@ -156,7 +161,8 @@ public class MonthSchedule extends JPanel {
 		contentPanel.add(new JLabel(result[5]));
 		contentPanel.add(new JLabel(result[6]));
 
-		String[] horarios = { "13:00:00", "14:30:00", "16:00:00", "17:30:00", "18:00:00" };
+		String[] horarios = { "08:00:00", "09:30:00", "11:00:00", "13:00:00", "14:30:00", "16:00:00", "17:30:00",
+				"18:00:00" };
 		String[] dates = convert2(result);
 
 		for (String horario : horarios) {
@@ -166,8 +172,10 @@ public class MonthSchedule extends JPanel {
 			contentPanel.add(label);
 			for (int j = 0; j < 7; j++) {
 				JLabel cellLabel = new JLabel();
+				cellLabel.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0))); // add border
 				for (Schedule schedule : schedules) {
-					System.out.println(schedule.getHorarioInicioAula() + " " + schedule.getDiaSemana() + " " + schedule.getDataAula());
+					System.out.println(schedule.getHorarioInicioAula() + " " + schedule.getDiaSemana() + " "
+							+ schedule.getDataAula());
 					if (schedule.getHorarioInicioAula().equals(horario)
 							&& schedule.getDiaSemana().equals(getDiaSemana(j))
 							&& schedule.getDataAula().equals(dates[j])) {
@@ -336,23 +344,27 @@ public class MonthSchedule extends JPanel {
 		footerPanel.removeAll();
 		revalidate();
 		repaint();
+		// contentPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
 		JButton nextButton2 = new JButton("Next Day");
 		footerPanel.add(nextButton2, BorderLayout.CENTER);
 
 		final JLabel aulaLabel = new JLabel();
 		contentPanel.add(aulaLabel);
-		aulas = adicionar(aulas);
+		aulas = ordenar(aulas);
+		currentAulaIndex = 0;
 		exibirAula(aulas.get(currentAulaIndex));
 
 		nextButton2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				currentAulaIndex++;
+				contentPanel.removeAll();
 				if (currentAulaIndex < aulas.size()) {
 					System.out.println(currentAulaIndex);
 					exibirAula(aulas.get(currentAulaIndex));
 				} else {
+					// footerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 					currentAulaIndex = 0;
 					headerPanel.removeAll();
 					contentPanel.removeAll();
@@ -365,7 +377,9 @@ public class MonthSchedule extends JPanel {
 					footerPanel.add(nextButton, BorderLayout.EAST);
 					add(footerPanel, BorderLayout.SOUTH);
 					footerPanel.add(dayButton, BorderLayout.CENTER);
+					headerPanel.add(monthButton, BorderLayout.EAST);
 					populateSchedule(scheduleList, currentWeekDays);
+
 				}
 			}
 		});
@@ -373,10 +387,9 @@ public class MonthSchedule extends JPanel {
 
 	private void exibirAula(List<String> aula) {
 		System.out.println("Entras aqui!");
-		contentPanel.removeAll();
+		// contentPanel.removeAll();
 		contentPanel.add(new JLabel("Dia da semana: "));
 		contentPanel.add(new JLabel(aula.get(0)));
-		System.out.println(aula.get(0));
 		contentPanel.add(new JLabel("Hora de Inicio: "));
 		contentPanel.add(new JLabel(aula.get(1)));
 		contentPanel.add(new JLabel("Data:"));
@@ -387,7 +400,7 @@ public class MonthSchedule extends JPanel {
 		repaint();
 	}
 
-	public static List<List<String>> adicionar(List<List<String>> aulas) {
+	public static List<List<String>> ordenar(List<List<String>> aulas) {
 
 		// Cria duas listas vazias para armazenar as aulas de seg e ter
 		List<List<String>> aulasSeg = new ArrayList<>();
@@ -435,7 +448,7 @@ public class MonthSchedule extends JPanel {
 		footerPanel.removeAll();
 		revalidate();
 		repaint();
-
+		currentWeekIndex = 0;
 		// Populate schedule for each week of the month
 		for (int i = 0; i < getMonthWeekDays(2022, month).size() - 1; i++) {
 			currentWeekDays = getMonthWeekDays(2022, month).get(currentWeekIndex);
@@ -451,9 +464,7 @@ public class MonthSchedule extends JPanel {
 		// Add event listeners to buttons
 		prevButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				contentPanel.removeAll();
-
 				revalidate();
 				repaint();
 				month--;
@@ -512,15 +523,8 @@ public class MonthSchedule extends JPanel {
 		revalidate();
 		repaint();
 	}
-	
+
 	public static void initializeSchdule(List<Schedule> list) {
-		Horario h = new Horario();
-		try {
-			h.carregarAulasDeArquivoCSV("/Users/tomasrosa/Desktop/horario_exemplo_2.csv");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		List<List<Date>> d = getMonthWeekDays(2022, 11);
 		MonthSchedule schedulePanel = new MonthSchedule(list, d);
 
@@ -563,18 +567,19 @@ public class MonthSchedule extends JPanel {
 		contentPanel.add(new JLabel(result[5]));
 		contentPanel.add(new JLabel(result[6]));
 
-		String[] horarios = { "13:00:00", "14:30:00", "16:00:00", "17:30:00", "18:00:00" };
-		String[] dates = convert2(result);
+		String[] horarios = { "08:00:00", "09:30:00", "11:00:00", "13:00:00", "14:30:00", "16:00:00", "17:30:00", "18:00:00" };
+		final String[] dates = convert2(result);
 
-		for (String horario : horarios) {
+		for (final String horario : horarios) {
 			JLabel label = new JLabel(horario);
 			label.setHorizontalAlignment(JLabel.CENTER);
 			label.setVerticalAlignment(JLabel.CENTER);
 			contentPanel.add(label);
 			for (int j = 0; j < 7; j++) {
+				final int i = j;
 				JLabel cellLabel = new JLabel();
 				for (Schedule schedule : schedules) {
-
+					cellLabel.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0))); // add border
 					if (schedule.getHorarioInicioAula().equals(horario)
 							&& schedule.getDiaSemana().equals(getDiaSemana(j))
 							&& schedule.getDataAula().equals(dates[j])) {
@@ -588,6 +593,37 @@ public class MonthSchedule extends JPanel {
 						aulas.add(lista);
 					}
 				}
+				int count = 0;
+				for (List<String> aula : aulas) {
+					if (aula.get(1).equals(horario) && aula.get(0).equals(getDiaSemana(j))
+							&& aula.get(2).equals(dates[j])) {
+						count++;
+					}
+				}
+				
+				if (count >= 2) {
+					JButton seeClashesButton = new JButton("Aula sobreposta");
+					seeClashesButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							JFrame clashPopup = new JFrame("Clashed Classes");
+							clashPopup.setSize(300, 200);
+							clashPopup.setLocationRelativeTo(null);
+							JTextArea clashTextArea = new JTextArea();
+							for (List<String> aula : aulas) {
+								if (aula.get(1).equals(horario) && aula.get(0).equals(getDiaSemana(i))
+										&& aula.get(2).equals(dates[i])) {
+									clashTextArea.append(aula.get(3) + "\n");
+								}
+							}
+							clashPopup.add(new JScrollPane(clashTextArea));
+							clashPopup.setVisible(true);
+						}
+					});
+					cellLabel.setLayout(new BorderLayout());
+					cellLabel.add(seeClashesButton, BorderLayout.NORTH);
+				}
+				
 				cellLabel.setHorizontalAlignment(JLabel.CENTER);
 				cellLabel.setVerticalAlignment(JLabel.CENTER);
 				contentPanel.add(cellLabel);

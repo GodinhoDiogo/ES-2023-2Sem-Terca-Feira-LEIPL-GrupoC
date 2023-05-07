@@ -20,44 +20,26 @@ import modules.ScheduleList;
 
 public class CsvToJsonConverterTest {
 
-    private File csvFile;
-    private String jsonFilePath;
+    private InputStream csvInputStream;
+    private InputStream jsonInputStream;
 
     @BeforeEach
-    public void setUp() throws IOException {
-        InputStream csvResource = getClass().getClassLoader().getResourceAsStream("sample.csv");
-        if (csvResource != null) {
-            Path tempCsvFile = Files.createTempFile("tempCsvFile", ".csv");
-            Files.copy(csvResource, tempCsvFile, StandardCopyOption.REPLACE_EXISTING);
-            csvFile = tempCsvFile.toFile();
-            csvFile.deleteOnExit();
-        }
-
-        InputStream jsonResource = getClass().getClassLoader().getResourceAsStream("sample.json");
-        if (jsonResource != null) {
-            Path tempJsonFile = Files.createTempFile("tempJsonFile", ".json");
-            Files.copy(jsonResource, tempJsonFile, StandardCopyOption.REPLACE_EXISTING);
-            jsonFilePath = tempJsonFile.toString();
-            tempJsonFile.toFile().deleteOnExit();
-        }
+    public void setUp() {
+        csvInputStream = getClass().getClassLoader().getResourceAsStream("sample.csv");
+        jsonInputStream = getClass().getClassLoader().getResourceAsStream("sample.json");
     }
+
 
     @Test
     public void testCsvToJsonConverter() throws IOException {
-        ScheduleList scheduleList = CsvToJsonConverter.CsvToJsonConverted(csvFile, null);
+        ScheduleList scheduleList = CsvToJsonConverter.CsvToJsonConverted(csvInputStream, null);
         assertNotNull(scheduleList);
         assertEquals(3, scheduleList.getSchedules().size());
-
-        String json = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
-        Gson gson = new Gson();
-        ScheduleList convertedList = gson.fromJson(json, ScheduleList.class);
-
-        assertEquals(scheduleList.getSchedules().size(), convertedList.getSchedules().size());
     }
 
     @Test
     public void testScheduleList() throws IOException {
-        ScheduleList scheduleList = CsvToJsonConverter.scheduleList(csvFile, null);
+        ScheduleList scheduleList = CsvToJsonConverter.scheduleList(csvInputStream, null);
         assertNotNull(scheduleList);
         assertEquals(3, scheduleList.getSchedules().size());
 

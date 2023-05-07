@@ -23,7 +23,8 @@ import javax.swing.JTextField;
 import converters.CsvToJsonConverter;
 import converters.JsonToCsvConverter;
 import modules.ScheduleList;
-
+import java.io.FileInputStream;
+import java.io.InputStream;
 public class ChooseImport extends JFrame {
 	private JTextField textField;
 	private JRadioButton radioButton1;
@@ -50,41 +51,41 @@ public class ChooseImport extends JFrame {
 		JButton submitButton = new JButton("Submit");
 		// Create button
 		submitButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					ScheduleList ss = null;
-					JFileChooser fileChooser = new JFileChooser();
-					if (!radioButton3.isSelected()) {
-						int result = fileChooser.showOpenDialog(ChooseImport.this);
-						if (result == JFileChooser.APPROVE_OPTION) {
-							File selectedFile = fileChooser.getSelectedFile();
-							if (radioButton1.isSelected()) {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    ScheduleList ss = null;
+                    JFileChooser fileChooser = new JFileChooser();
+                    if (!radioButton3.isSelected()) {
+                        int result = fileChooser.showOpenDialog(ChooseImport.this);
+                        if (result == JFileChooser.APPROVE_OPTION) {
+                            File selectedFile = fileChooser.getSelectedFile();
+                            if (radioButton1.isSelected()) {
+                                try (InputStream jsonInputStream = new FileInputStream(selectedFile)) {
+                                    ss = JsonToCsvConverter.jsonToCsvConverted(jsonInputStream, null);
+                                }
+                            } else if (radioButton2.isSelected()) {
+                            	try (InputStream csvInputStream = new FileInputStream(selectedFile)) {
+                                ss = CsvToJsonConverter.CsvToJsonConverted(csvInputStream, null);
+                            	 }
+                            }
+                        }
+                    }
 
-								ss = JsonToCsvConverter.jsonToCsvConverted(selectedFile, getName(), null);
+                    if (radioButton3.isSelected()) {
+                        String text = textField.getText();
+                        ss = lerHorario(text);
+                    }
 
-							} else if (radioButton2.isSelected()) {
-								ss = CsvToJsonConverter.CsvToJsonConverted(selectedFile, null);
-							}
-						}
-					}
-
-					if (radioButton3.isSelected()) {
-						String text = textField.getText();
-
-						ss = lerHorario(text);
-
-					}
-
-					System.out.println(ss);
-					List<String> cadeiras = removeDuplicateWords(ss);
-					dispose();
-					new SelectUCs(ss, cadeiras);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
+                    System.out.println(ss);
+                    List<String> cadeiras = removeDuplicateWords(ss);
+                    dispose();
+                    new SelectUCs(ss, cadeiras);
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+            }
+        });
 
 		// Add components to window
 		add(radioButton1);

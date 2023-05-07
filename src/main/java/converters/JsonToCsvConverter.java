@@ -1,37 +1,24 @@
 package converters;
 
-import java.io.File;
-import java.io.FileReader;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 import com.google.gson.Gson;
 import modules.ScheduleList;
 
 public class JsonToCsvConverter {
-    public static ScheduleList jsonToCsvConverted(File file, String path, List<String> lista) throws IOException {
-        // Create a reader for the JSON file
-        Reader jsonReader = new FileReader(file);
-
-        // Parse the JSON file into a list of Schedule objects
-        Gson gson = new Gson();
-        ScheduleList schedules = gson.fromJson(jsonReader, ScheduleList.class);
-
-        // Create a writer for the CSV file
+    public static ScheduleList jsonToCsvConverted(InputStream jsonInputStream,List<String> lista) throws IOException {
+        ScheduleList schedules = scheduleList(jsonInputStream, lista);
         return schedules;
     }
-    
-    
-    public static ScheduleList scheduleList(File file, List<String> lista) throws IOException {
-    	 Reader jsonReader = new FileReader(file);
 
-         // Parse the JSON file into a list of Schedule objects
-         Gson gson = new Gson();
-         ScheduleList schedules = gson.fromJson(jsonReader, ScheduleList.class);
-
-         return schedules;
-        	 
-         
+    public static ScheduleList scheduleList(InputStream jsonInputStream, List<String> lista) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(jsonInputStream))) {
+            Gson gson = new Gson();
+            ScheduleList schedules = gson.fromJson(reader, ScheduleList.class);
+            return schedules;
+        }
     }
-    
 }

@@ -20,7 +20,7 @@ import org.apache.commons.csv.CSVRecord;
 
 The CsvToJsonConverter class converts data from a CSV file to a ScheduleList object containing Schedule objects.
 */
-public class CsvToJsonConverterTest {
+public class CsvToJsonConverterTest2 {
 
 /**
 

@@ -21,30 +21,27 @@ import modules.ScheduleList;
 
 public class JsonToCsvConverterTest {
 
-    private File jsonFile;
-    private String csvFilePath;
+	private InputStream csvInputStream;
+	private InputStream jsonInputStream;
 
-    @BeforeEach
-    public void setUp() {
-        Path resourcesPath = Paths.get("src", "test", "resources");
-        csvFilePath = resourcesPath.resolve("sample.csv").toString();
-        jsonFile = resourcesPath.resolve("sample.json").toFile();
-    }
+	@BeforeEach
+	public void setUp() {
+	    csvInputStream = getClass().getClassLoader().getResourceAsStream("sample.csv");
+	    jsonInputStream = getClass().getClassLoader().getResourceAsStream("sample.json");
+	}
+
 
 
     @Test
     public void testJsonToCsvConverter() throws IOException {
-        ScheduleList scheduleList = JsonToCsvConverter.jsonToCsvConverted(jsonFile, csvFilePath, null);
+        ScheduleList scheduleList = JsonToCsvConverter.jsonToCsvConverted(jsonInputStream, null);
         assertNotNull(scheduleList);
         assertEquals(3, scheduleList.getSchedules().size());
-
-        List<String> csvLines = Files.readAllLines(Paths.get(csvFilePath));
-        assertEquals(4, csvLines.size()); // 1 header line and 3 data lines
     }
 
     @Test
     public void testScheduleList() throws IOException {
-        ScheduleList scheduleList = JsonToCsvConverter.scheduleList(jsonFile, null);
+        ScheduleList scheduleList = JsonToCsvConverter.scheduleList(jsonInputStream, null);
         assertNotNull(scheduleList);
         assertEquals(3, scheduleList.getSchedules().size());
 

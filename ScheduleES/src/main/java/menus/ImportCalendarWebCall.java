@@ -44,7 +44,6 @@ import java.util.regex.Pattern;
 import java.util.ArrayList;
 
 public class ImportCalendarWebCall extends JFrame {
-
 	private JTextField textField;
 
 	public ImportCalendarWebCall() {

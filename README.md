@@ -1,7 +1,7 @@
 # ProjetoES
-André Coelho
+André Coelho_98735_andrecoelho2002
 Adriano Queiroz_99191_AdrianoQueiroz1
 Diogo Godinho_99423_GodinhoDiogo
-Tomás Carvalho
-Tomás Rosa
+Tomás Carvalho_98597_TomasCarvalho21
+Tomás Rosa_99186_Rosa99186
 

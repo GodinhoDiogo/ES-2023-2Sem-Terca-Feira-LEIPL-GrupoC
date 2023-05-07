@@ -1,7 +1,7 @@
 # ProjetoES
 André Coelho
 Adriano Queiroz
-Diogo Godinho 99423 GodinhoDiogo
+Diogo Godinho_99423_GodinhoDiogo
 Tomás Carvalho
 Tomás Rosa
 

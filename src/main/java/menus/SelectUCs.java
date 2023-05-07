@@ -1,18 +1,21 @@
 package menus;
 
 import javax.swing.*;
-import modules.ScheduleList;
 
+import modules.Schedule;
+import modules.ScheduleList;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class SelectUCs extends JFrame { // adicionar uma opcao para selecionar todas
 	private List<JCheckBox> optionCheckBoxes;
 	private JButton submitButton;
 	private ScheduleList list;
+	List<String> selectedOptions2 = new ArrayList<String>();
 
 	public SelectUCs(ScheduleList sl, List<String> options) throws IOException {
 		
@@ -27,6 +30,7 @@ public class SelectUCs extends JFrame { // adicionar uma opcao para selecionar t
 				boolean selectAll = selectAllCheckBox.isSelected();
 				for (JCheckBox checkBox : optionCheckBoxes) {
 					checkBox.setSelected(selectAll);
+					selectedOptions2.add(checkBox.getText());
 				}
 			}
 		});
@@ -43,7 +47,7 @@ public class SelectUCs extends JFrame { // adicionar uma opcao para selecionar t
 			public void actionPerformed(ActionEvent e) {
 				// Ação a ser executada ao clicar no botão de submissão
 				String selectedOptions = "Opções selecionadas:\n";
-				List<String> selectedOptions2 = new ArrayList<String>();
+				
 				boolean selectAll = selectAllCheckBox.isSelected();
 				if (selectAll) {
 					selectedOptions += "Selecionar Todos\n";
@@ -59,7 +63,7 @@ public class SelectUCs extends JFrame { // adicionar uma opcao para selecionar t
 				JOptionPane.showMessageDialog(SelectUCs.this, selectedOptions);
 				dispose();
 				
-				new SaveOrDisplay(list);
+				new SaveOrDisplay(filterScheduleByCourse(list,selectedOptions2));
 				
 				
 			}
@@ -79,6 +83,20 @@ public class SelectUCs extends JFrame { // adicionar uma opcao para selecionar t
 
 		// lista = CsvToJsonConverter.CsvToJsonConverted(file, path);
 	}
+	
+	public ScheduleList filterScheduleByCourse(ScheduleList scheduleList, List<String> courseList) {
+	    List<Schedule> filteredScheduleList = new ArrayList<>();
+
+	    for (Schedule schedule : scheduleList.getSchedules()) {
+	        if (courseList.contains(schedule.getUnidadeCurricular())) {
+	            filteredScheduleList.add(schedule);
+	        }
+	    }
+	    return new ScheduleList(filteredScheduleList);
+	}
+
+
+	
 	
 	
 }

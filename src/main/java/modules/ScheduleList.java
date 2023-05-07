@@ -17,6 +17,9 @@ public class ScheduleList {
 	public ScheduleList() {
 		schedules =  new ArrayList<Schedule>();
 	}
+	public ScheduleList(List<Schedule> schedules) {
+		this.schedules = schedules;
+	}
 	public void add(Schedule s) {
 		schedules.add(s);
 	}

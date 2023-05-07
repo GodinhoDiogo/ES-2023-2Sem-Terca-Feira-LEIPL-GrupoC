@@ -244,7 +244,7 @@ public class MonthSchedule extends JPanel {
 			// Se não for, adiciona os dias restantes da primeira semana separadamente
 			int daysUntilMonday = 9 - dayOfWeek; // 9 porque estamos considerando que segunda é o segundo dia da semana
 													// (e não o primeiro)
-			List<Date> firstWeekDays = new ArrayList<>();
+			List<Date> firstWeekDays = new ArrayList<Date>();
 			for (int i = 0; i < daysUntilMonday; i++) {
 				firstWeekDays.add(cal.getTime());
 				cal.add(Calendar.DAY_OF_MONTH, 1);
@@ -254,7 +254,7 @@ public class MonthSchedule extends JPanel {
 
 		// Itera pelas semanas do mês, adicionando os dias da semana a cada semana
 		while (cal.get(Calendar.MONTH) == month - 1) {
-			List<Date> weekDays = new ArrayList<>();
+			List<Date> weekDays = new ArrayList<Date>();
 			for (int i = 0; i < 7; i++) {
 				weekDays.add(cal.getTime());
 				cal.add(Calendar.DAY_OF_MONTH, 1);
@@ -282,7 +282,7 @@ public class MonthSchedule extends JPanel {
 
 	public static List<Date> getMonthDates(int year, int month) {
 		// Cria uma lista para armazenar as datas do mês
-		List<Date> monthDatesList = new ArrayList<>();
+		List<Date> monthDatesList = new ArrayList<Date>();
 
 		// Cria um calendário para representar o primeiro dia do mês
 		Calendar cal = Calendar.getInstance();

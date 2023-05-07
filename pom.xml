@@ -74,15 +74,6 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version> <!-- use version 3.8.1 or later -->
-				<configuration>
-					<source>11</source> <!-- set the source version to 11 -->
-					<target>11</target> <!-- set the target version to 11 -->
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.sonarsource.scanner.maven</groupId>
 				<artifactId>sonar-maven-plugin</artifactId>
 				<version>3.9.1.2184</version>
@@ -94,13 +85,6 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<sonar.projectKey>Es_ScheduleES</sonar.projectKey>
-					<sonar.organization>godinhodiogo</sonar.organization>
-					<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-					<sonar.sources>src/main/java</sonar.sources>
-					<sonar.login>${env.SONAR_TOKEN}</sonar.login>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>

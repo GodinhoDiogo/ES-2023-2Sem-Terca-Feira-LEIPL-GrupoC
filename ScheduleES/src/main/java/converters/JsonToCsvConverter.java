@@ -24,8 +24,6 @@ public class JsonToCsvConverter {
         ScheduleList schedules = gson.fromJson(jsonReader, ScheduleList.class);
 
         // Create a writer for the CSV file
-        
-
         return schedules;
     }
     

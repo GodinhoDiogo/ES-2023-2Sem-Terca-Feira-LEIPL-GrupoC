@@ -2,9 +2,13 @@ package converters;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
+import java.io.FileOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,9 +25,33 @@ public class CsvToJsonConverterTest {
     private String jsonFilePath;
 
     @BeforeEach
-    public void setUp() {
-        csvFile = new File("src/test/resources/sample.csv");
-        jsonFilePath = "src/test/resources/sample.json";
+    public void setUp() throws IOException {
+        InputStream csvResource = getClass().getClassLoader().getResourceAsStream("sample.csv");
+        if (csvResource != null) {
+            csvFile = File.createTempFile("tempCsvFile", ".csv");
+            csvFile.deleteOnExit();
+            try (OutputStream outputStream = new FileOutputStream(csvFile)) {
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = csvResource.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, length);
+                }
+            }
+        }
+        
+        InputStream jsonResource = getClass().getClassLoader().getResourceAsStream("sample.json");
+        if (jsonResource != null) {
+            File tempJsonFile = File.createTempFile("tempJsonFile", ".json");
+            tempJsonFile.deleteOnExit();
+            try (OutputStream outputStream = new FileOutputStream(tempJsonFile)) {
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = jsonResource.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, length);
+                }
+            }
+            jsonFilePath = tempJsonFile.getPath();
+        }
     }
 
     @Test

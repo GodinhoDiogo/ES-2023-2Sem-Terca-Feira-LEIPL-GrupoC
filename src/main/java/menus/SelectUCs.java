@@ -85,7 +85,7 @@ public class SelectUCs extends JFrame { // adicionar uma opcao para selecionar t
 	}
 	
 	public ScheduleList filterScheduleByCourse(ScheduleList scheduleList, List<String> courseList) {
-	    List<Schedule> filteredScheduleList = new ArrayList<>();
+		List<Schedule> filteredScheduleList = new ArrayList<Schedule>();
 
 	    for (Schedule schedule : scheduleList.getSchedules()) {
 	        if (courseList.contains(schedule.getUnidadeCurricular())) {

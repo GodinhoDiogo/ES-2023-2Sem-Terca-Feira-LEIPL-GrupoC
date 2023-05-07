@@ -232,7 +232,7 @@ public class MonthSchedule extends JPanel {
 
 	public static List<List<Date>> getMonthWeekDays(int year, int month) {
 		// Cria uma lista para armazenar as semanas do mês
-		List<List<Date>> monthWeekDaysList = new ArrayList<>();
+		List<List<Date>> monthWeekDaysList = new ArrayList<List<Date>>();
 
 		// Cria um calendário para representar o primeiro dia do mês
 		Calendar cal = Calendar.getInstance();

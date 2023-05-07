@@ -23,7 +23,7 @@ public class SelectUCs extends JFrame { // adicionar uma opcao para selecionar t
 		// Cria o painel de opções
 		list = sl;
 		JPanel optionsPanel = new JPanel(new GridLayout(options.size() + 1, 1));
-		optionCheckBoxes = new ArrayList<>();
+		optionCheckBoxes = new ArrayList<JCheckBox>();
 		final JCheckBox selectAllCheckBox = new JCheckBox("Selecionar Todos");
 		selectAllCheckBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -85,7 +85,7 @@ public class SelectUCs extends JFrame { // adicionar uma opcao para selecionar t
 	}
 	
 	public ScheduleList filterScheduleByCourse(ScheduleList scheduleList, List<String> courseList) {
-	    List<Schedule> filteredScheduleList = new ArrayList<>();
+		List<Schedule> filteredScheduleList = new ArrayList<Schedule>();
 
 	    for (Schedule schedule : scheduleList.getSchedules()) {
 	        if (courseList.contains(schedule.getUnidadeCurricular())) {

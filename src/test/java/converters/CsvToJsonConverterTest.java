@@ -2,10 +2,15 @@ package converters;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
+import java.io.FileOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.io.OutputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,8 +27,9 @@ public class CsvToJsonConverterTest {
 
     @BeforeEach
     public void setUp() {
-        csvFile = new File("src/test/resources/sample.csv");
-        jsonFilePath = "src/test/resources/sample.json";
+        Path resourcesPath = Paths.get("src", "test", "resources");
+        csvFile = resourcesPath.resolve("sample.csv").toFile();
+        jsonFilePath = resourcesPath.resolve("sample.json").toString();
     }
 
     @Test

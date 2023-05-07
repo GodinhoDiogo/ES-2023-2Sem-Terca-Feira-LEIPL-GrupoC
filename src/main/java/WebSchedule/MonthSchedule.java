@@ -35,7 +35,7 @@ public class MonthSchedule extends JPanel {
 	private int currentWeekIndex;
 	private List<Date> currentWeekDays;
 	private int month;
-	private List<List<String>> aulas = new ArrayList<>();
+	private List<List<String>> aulas = new ArrayList<List<String>>();
 	private JButton dayButton;
 	private int currentAulaIndex = 0;
 	private JButton monthButton;
@@ -232,7 +232,7 @@ public class MonthSchedule extends JPanel {
 
 	public static List<List<Date>> getMonthWeekDays(int year, int month) {
 		// Cria uma lista para armazenar as semanas do mês
-		List<List<Date>> monthWeekDaysList = new ArrayList<>();
+		List<List<Date>> monthWeekDaysList = new ArrayList<List<Date>>();
 
 		// Cria um calendário para representar o primeiro dia do mês
 		Calendar cal = Calendar.getInstance();
@@ -244,7 +244,7 @@ public class MonthSchedule extends JPanel {
 			// Se não for, adiciona os dias restantes da primeira semana separadamente
 			int daysUntilMonday = 9 - dayOfWeek; // 9 porque estamos considerando que segunda é o segundo dia da semana
 													// (e não o primeiro)
-			List<Date> firstWeekDays = new ArrayList<>();
+			List<Date> firstWeekDays = new ArrayList<Date>();
 			for (int i = 0; i < daysUntilMonday; i++) {
 				firstWeekDays.add(cal.getTime());
 				cal.add(Calendar.DAY_OF_MONTH, 1);
@@ -254,7 +254,7 @@ public class MonthSchedule extends JPanel {
 
 		// Itera pelas semanas do mês, adicionando os dias da semana a cada semana
 		while (cal.get(Calendar.MONTH) == month - 1) {
-			List<Date> weekDays = new ArrayList<>();
+			List<Date> weekDays = new ArrayList<Date>();
 			for (int i = 0; i < 7; i++) {
 				weekDays.add(cal.getTime());
 				cal.add(Calendar.DAY_OF_MONTH, 1);
@@ -268,7 +268,7 @@ public class MonthSchedule extends JPanel {
 			// Se não for, adiciona os dias restantes da última semana separadamente
 			int daysFromMonday = 7 - (lastDayOfWeek - 2); // 2 porque estamos considerando que segunda é o segundo dia
 															// da semana (e não o primeiro)
-			List<Date> lastWeekDays = new ArrayList<>();
+			List<Date> lastWeekDays = new ArrayList<Date>();
 			cal.add(Calendar.DAY_OF_MONTH, -daysFromMonday);
 			for (int i = 0; i < daysFromMonday; i++) {
 				lastWeekDays.add(cal.getTime());
@@ -282,7 +282,7 @@ public class MonthSchedule extends JPanel {
 
 	public static List<Date> getMonthDates(int year, int month) {
 		// Cria uma lista para armazenar as datas do mês
-		List<Date> monthDatesList = new ArrayList<>();
+		List<Date> monthDatesList = new ArrayList<Date>();
 
 		// Cria um calendário para representar o primeiro dia do mês
 		Calendar cal = Calendar.getInstance();
@@ -400,11 +400,11 @@ public class MonthSchedule extends JPanel {
 	public static List<List<String>> ordenar(List<List<String>> aulas) {
 
 		// Cria duas listas vazias para armazenar as aulas de seg e ter
-		List<List<String>> aulasSeg = new ArrayList<>();
-		List<List<String>> aulasTer = new ArrayList<>();
-		List<List<String>> aulasQua = new ArrayList<>();
-		List<List<String>> aulasQui = new ArrayList<>();
-		List<List<String>> aulasSex = new ArrayList<>();
+		List<List<String>> aulasSeg = new ArrayList<List<String>>();
+		List<List<String>> aulasTer = new ArrayList<List<String>>();
+		List<List<String>> aulasQua = new ArrayList<List<String>>();
+		List<List<String>> aulasQui = new ArrayList<List<String>>();
+		List<List<String>> aulasSex = new ArrayList<List<String>>();
 
 		// Percorre a lista de aulas e adiciona as aulas de seg e ter às suas
 		// respectivas listas
@@ -426,7 +426,7 @@ public class MonthSchedule extends JPanel {
 
 		// Cria uma nova lista que vai conter todas as aulas de seg seguidas por todas
 		// as aulas de ter
-		List<List<String>> aulasSegTer = new ArrayList<>();
+		List<List<String>> aulasSegTer = new ArrayList<List<String>>();
 		aulasSegTer.addAll(aulasSeg);
 		aulasSegTer.addAll(aulasTer);
 		aulasSegTer.addAll(aulasQua);
